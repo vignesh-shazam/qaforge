@@ -9,7 +9,7 @@ export function MarketingLayout({
   children,
 }: MarketingLayoutProps): React.JSX.Element {
   return (
-    <div className="flex flex-col min-h-screen bg-surface-900">
+    <div className="flex flex-col min-h-screen" style={{ background: "#030712" }}>
       <MarketingHeader />
       <main className="flex-1">{children}</main>
       <MarketingFooter />

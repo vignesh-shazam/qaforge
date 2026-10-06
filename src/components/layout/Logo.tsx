@@ -15,7 +15,7 @@ export function Logo({
     <Link
       href="/"
       className={cn(
-        "inline-flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-md",
+        "inline-flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900 rounded-md outline-none",
         className,
       )}
       aria-label="QAForge home"
