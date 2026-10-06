@@ -26,12 +26,19 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.svg",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0f0f11",
+  themeColor: "#030712",
 };
 
 interface RootLayoutProps {

@@ -42,7 +42,7 @@ function DashboardMockup(): React.JSX.Element {
             style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
           >
             <svg width="8" height="8" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-              <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
+              <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
             </svg>
             <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>app.qaforge.io</span>
           </div>
@@ -65,7 +65,7 @@ function DashboardMockup(): React.JSX.Element {
             <div className="flex items-center gap-1.5 px-3 mb-4">
               <div className="w-5 h-5 rounded bg-brand-500 flex items-center justify-center shrink-0">
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
               <span className="text-[10px] font-bold text-white">QAForge</span>
@@ -112,8 +112,8 @@ function DashboardMockup(): React.JSX.Element {
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
               >
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2"/>
-                  <path d="M9 9l-2-2" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2"/>
+                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2" />
+                  <path d="M9 9l-2-2" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2" />
                 </svg>
                 <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>Search…</span>
               </div>
@@ -210,7 +210,7 @@ function DashboardMockup(): React.JSX.Element {
             style={{ background: "rgba(99,102,241,0.15)" }}
           >
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-              <path d="M2 3.5h10M2 7h7M2 10.5h8.5" stroke="#818cf8" strokeWidth="1.3" strokeLinecap="round"/>
+              <path d="M2 3.5h10M2 7h7M2 10.5h8.5" stroke="#818cf8" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
           </div>
           <div>
@@ -236,7 +236,7 @@ function DashboardMockup(): React.JSX.Element {
             style={{ background: "rgba(139,92,246,0.15)" }}
           >
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-              <path d="M7 1.5L8.3 5.2 12 6.5 8.3 7.8 7 11.5 5.7 7.8 2 6.5 5.7 5.2 7 1.5Z" stroke="#a78bfa" strokeWidth="1.1" strokeLinejoin="round"/>
+              <path d="M7 1.5L8.3 5.2 12 6.5 8.3 7.8 7 11.5 5.7 7.8 2 6.5 5.7 5.2 7 1.5Z" stroke="#a78bfa" strokeWidth="1.1" strokeLinejoin="round" />
             </svg>
           </div>
           <div>
@@ -326,8 +326,8 @@ export function HeroSection(): React.JSX.Element {
             {/* Headline */}
             <h1
               id="hero-heading"
-              className="font-bold tracking-tight leading-[1.05]"
-              style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)" }}
+              className="font-bold tracking-tight leading-[1]"
+              style={{ fontSize: "clamp(2rem, 3vw, 10rem)" }}
             >
               <span className="text-white">Turn any web application</span>
               <br />
@@ -364,7 +364,7 @@ export function HeroSection(): React.JSX.Element {
               >
                 Get Started Free
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
               <button
@@ -377,8 +377,8 @@ export function HeroSection(): React.JSX.Element {
                 }}
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2"/>
-                  <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor"/>
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor" />
                 </svg>
                 Watch Demo
               </button>
@@ -387,14 +387,16 @@ export function HeroSection(): React.JSX.Element {
             {/* Trust row */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
               {[
+                "Built for QA Engineers",
                 "No credit card required",
                 "Get started in minutes",
-                "Built for QA Engineers",
+                "Don't waste time in manual",
+                "Built by QA Engineer",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-1.5">
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                    <circle cx="6.5" cy="6.5" r="5.5" stroke="#4ade80" strokeWidth="1"/>
-                    <path d="M4 6.5l2 2 3-3" stroke="#4ade80" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="15" height="15" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <circle cx="6.5" cy="6.5" r="5.5" stroke="#4ade80" strokeWidth="1" />
+                    <path d="M4 6.5l2 2 3-3" stroke="#4ade80" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>{item}</span>
                 </div>

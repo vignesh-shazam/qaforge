@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <linearGradient id="cyanG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Icon mark — white version -->
+  <g transform="translate(12, 10)">
+    <path d="M22 2 L38 11 L38 31 L22 40 L6 31 L6 11 Z"
+          stroke="white" stroke-width="1" stroke-opacity="0.18" fill="none"/>
+    <circle cx="22" cy="2"  r="1.2" fill="white" fill-opacity="0.25"/>
+    <circle cx="38" cy="11" r="1.2" fill="white" fill-opacity="0.25"/>
+    <circle cx="38" cy="31" r="1.2" fill="white" fill-opacity="0.25"/>
+    <circle cx="22" cy="40" r="1.2" fill="white" fill-opacity="0.25"/>
+    <circle cx="6"  cy="31" r="1.2" fill="white" fill-opacity="0.25"/>
+    <circle cx="6"  cy="11" r="1.2" fill="white" fill-opacity="0.25"/>
+    <!-- Q ring — white -->
+    <circle cx="22" cy="21" r="12"
+            stroke="white" stroke-width="2.2"
+            fill="none" stroke-opacity="0.9"/>
+    <!-- Verification mark — cyan -->
+    <path d="M15.5 21 L20 26 L28.5 14.5"
+          stroke="url(#cyanG)" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"
+          filter="url(#glow)"/>
+    <!-- Q tail — cyan -->
+    <path d="M30.5 29.5 L35.5 34.5"
+          stroke="url(#cyanG)" stroke-width="2.5"
+          stroke-linecap="round" filter="url(#glow)"/>
+    <circle cx="35.5" cy="34.5" r="1.7" fill="#22d3ee"/>
+    <!-- Circuit top -->
+    <circle cx="22" cy="9" r="1.1" fill="white" fill-opacity="0.35"/>
+  </g>
+
+  <!-- Separator -->
+  <line x1="70" y1="14" x2="70" y2="50" stroke="white" stroke-width="0.75" stroke-opacity="0.15"/>
+
+  <!-- Wordmark — white -->
+  <text x="80" y="40"
+        font-family="'Inter','SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif"
+        font-weight="800" font-size="26" letter-spacing="-0.8"
+        fill="white">QA</text>
+  <text x="127" y="40"
+        font-family="'Inter','SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif"
+        font-weight="600" font-size="26" letter-spacing="-0.6"
+        fill="white" fill-opacity="0.82">Forge</text>
+
+  <!-- Tagline -->
+  <text x="80" y="52"
+        font-family="'Inter','SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif"
+        font-weight="500" font-size="7.5" letter-spacing="3"
+        fill="white" fill-opacity="0.35">AI QUALITY ENGINEERING</text>
+</svg>

@@ -20,6 +20,12 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Allow next/image to serve SVG files from the public directory
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   async headers(): Promise<
     Array<{
       source: string;
