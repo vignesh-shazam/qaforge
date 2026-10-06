@@ -275,11 +275,14 @@ export function ProductShowcase(): React.JSX.Element {
                 33%       { opacity: 1;   transform: scale(1.08) translate(4%, -3%); }
                 66%       { opacity: 0.8; transform: scale(1.04) translate(-3%, 4%); }
               }
+              @media (prefers-reduced-motion: reduce) {
+                .showcase-glow { animation: none !important; }
+              }
             `}</style>
 
             {/* Strong inner glow — pulsing */}
             <div
-              className="absolute -z-10"
+              className="showcase-glow absolute -z-10"
               aria-hidden="true"
               style={{
                 inset: "-60px -40px -60px -40px",
@@ -290,7 +293,7 @@ export function ProductShowcase(): React.JSX.Element {
             />
             {/* Outer violet glow — slow drift */}
             <div
-              className="absolute -z-10"
+              className="showcase-glow absolute -z-10"
               aria-hidden="true"
               style={{
                 inset: "-100px -80px",

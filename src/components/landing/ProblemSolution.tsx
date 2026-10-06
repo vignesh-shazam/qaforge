@@ -24,6 +24,8 @@ export function ProblemSolution(): React.JSX.Element {
       style={{ background: "#030712" }}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Visually-hidden heading satisfies aria-labelledby and heading hierarchy */}
+        <h2 id="problem-solution-heading" className="sr-only">The Problem and Our Solution</h2>
         {/* Two-column card layout with arrow divider */}
         <div className="flex flex-col lg:flex-row items-stretch gap-0">
 
