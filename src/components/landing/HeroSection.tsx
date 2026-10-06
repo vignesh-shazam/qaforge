@@ -1,247 +1,412 @@
-import Link from "next/link";
+"use client";
 
-// ---------------------------------------------------------------------------
-// Dashboard mockup — faithful to the screenshot design
-// ---------------------------------------------------------------------------
+import Image from "next/image";
+import Link from "next/link";
+import {
+  LayoutDashboard,
+  FolderKanban,
+  TestTube2,
+  Bug,
+  Database,
+  Zap,
+  Bot,
+  Search,
+  Bell,
+  Play,
+  ChevronRight,
+  FileCode2,
+  Cpu,
+} from "lucide-react";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Floating feature cards around the dashboard
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface FloatingCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value?: string;
+  accentColor: string;
+  glowColor: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+function FloatingCard({
+  icon,
+  label,
+  value,
+  accentColor,
+  glowColor,
+  className = "",
+  style,
+}: FloatingCardProps): React.JSX.Element {
+  return (
+    <div
+      className={`absolute flex items-center gap-2.5 px-3 py-2.5 rounded-xl ${className}`}
+      style={{
+        background: "rgba(8,10,20,0.92)",
+        border: `1px solid ${accentColor}33`,
+        boxShadow: `0 0 20px ${glowColor}22, 0 4px 16px rgba(0,0,0,0.4)`,
+        backdropFilter: "blur(12px)",
+        ...style,
+      }}
+      aria-hidden="true"
+    >
+      <div
+        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+        style={{ background: `${accentColor}18` }}
+      >
+        <span style={{ color: accentColor }}>{icon}</span>
+      </div>
+      <div>
+        <div className="text-[11px] font-semibold text-white leading-none mb-0.5">
+          {label}
+        </div>
+        {value && (
+          <div className="text-[10px]" style={{ color: accentColor }}>
+            {value}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Metric card inside dashboard
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface MetricCardProps {
+  value: string;
+  label: string;
+  icon: React.ReactNode;
+  accentColor: string;
+  bgColor: string;
+}
+
+function MetricCard({
+  value,
+  label,
+  icon,
+  accentColor,
+  bgColor,
+}: MetricCardProps): React.JSX.Element {
+  return (
+    <div
+      className="rounded-xl p-3 flex flex-col gap-2"
+      style={{
+        background: bgColor,
+        border: `1px solid ${accentColor}22`,
+      }}
+    >
+      <div
+        className="w-7 h-7 rounded-lg flex items-center justify-center"
+        style={{ background: `${accentColor}18` }}
+      >
+        <span style={{ color: accentColor, display: "flex" }}>{icon}</span>
+      </div>
+      <div>
+        <div
+          className="text-xl font-bold leading-none mb-0.5"
+          style={{ color: accentColor }}
+        >
+          {value}
+        </div>
+        <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.38)" }}>
+          {label}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Activity bar chart
+// ─────────────────────────────────────────────────────────────────────────────
+
+const barHeights = [25, 40, 32, 58, 44, 70, 52, 80, 62, 75, 55, 85, 65, 90, 72, 95];
+
+function ActivityChart(): React.JSX.Element {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+          Testing Activity
+        </span>
+        <span className="text-[9px]" style={{ color: "#4ade80" }}>
+          ↑ 24% this week
+        </span>
+      </div>
+      <div className="flex items-end gap-[3px]" style={{ height: "32px" }}>
+        {barHeights.map((h, i) => (
+          <div
+            key={i}
+            className="flex-1 rounded-sm"
+            style={{
+              height: `${h}%`,
+              background:
+                i > barHeights.length - 5
+                  ? "linear-gradient(180deg, #818cf8, #6366f1)"
+                  : "rgba(99,102,241,0.25)",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Full dashboard mockup
+// ─────────────────────────────────────────────────────────────────────────────
 
 function DashboardMockup(): React.JSX.Element {
-  return (
-    <div className="relative w-full">
-      {/* Outer glow */}
-      <div
-        className="absolute -inset-8 -z-10 rounded-[40px] opacity-60"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 70% at 50% 50%, rgba(99,102,241,0.35) 0%, rgba(139,92,246,0.2) 40%, transparent 75%)",
-          filter: "blur(30px)",
-        }}
-      />
+  const projects = [
+    { name: "AIGAGA",               status: "Active",   dot: "#4ade80" },
+    { name: "InviteDesign",         status: "Active",   dot: "#4ade80" },
+    { name: "Driver Life Simulator",status: "Active",   dot: "#4ade80" },
+  ];
 
-      {/* Browser chrome wrapper */}
+  const sidebarItems = [
+    { label: "Dashboard",   icon: <LayoutDashboard size={13} />,  active: true  },
+    { label: "Projects",    icon: <FolderKanban    size={13} />,  active: false },
+    { label: "Test Cases",  icon: <TestTube2       size={13} />,  active: false },
+    { label: "Bug Reports", icon: <Bug             size={13} />,  active: false },
+    { label: "Test Data",   icon: <Database        size={13} />,  active: false },
+    { label: "API Tests",   icon: <Zap             size={13} />,  active: false },
+    { label: "Automation",  icon: <Bot             size={13} />,  active: false },
+  ];
+
+  return (
+    <div
+      className="relative rounded-2xl overflow-hidden"
+      style={{
+        background: "rgba(8,9,20,0.96)",
+        border: "1px solid rgba(99,102,241,0.18)",
+        boxShadow:
+          "0 0 60px rgba(99,102,241,0.18), 0 0 120px rgba(99,102,241,0.08), 0 24px 64px rgba(0,0,0,0.6)",
+      }}
+    >
+      {/* ── Browser chrome ── */}
       <div
-        className="rounded-2xl overflow-hidden shadow-2xl"
+        className="flex items-center gap-3 px-4 py-2.5"
         style={{
-          border: "1px solid rgba(255,255,255,0.08)",
-          background: "rgba(13,13,18,0.95)",
-          backdropFilter: "blur(16px)",
+          background: "rgba(4,5,14,0.98)",
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
         }}
       >
+        {/* Traffic lights */}
+        <div className="flex gap-1.5 shrink-0">
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#f59e0b" }} />
+          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} />
+        </div>
         {/* URL bar */}
         <div
-          className="flex items-center gap-3 px-4 py-2.5"
-          style={{ background: "rgba(8,8,12,0.9)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          className="flex-1 flex items-center gap-2 h-6 rounded-md px-3 max-w-[210px]"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
         >
-          <div className="flex gap-1.5 shrink-0">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} aria-hidden="true" />
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#f59e0b" }} aria-hidden="true" />
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} aria-hidden="true" />
-          </div>
-          <div
-            className="flex-1 flex items-center gap-2 rounded-md px-3 h-6 max-w-[200px]"
-            style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)" }}
-          >
-            <svg width="8" height="8" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-              <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-            </svg>
-            <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>app.qaforge.io</span>
-          </div>
-          <div className="ml-auto flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full bg-brand-500 flex items-center justify-center">
-              <span className="text-[7px] font-bold text-white">V</span>
+          <div className="w-2 h-2 rounded-full shrink-0" style={{ background: "#4ade80" }} />
+          <span className="text-[9px] font-mono truncate" style={{ color: "rgba(255,255,255,0.3)" }}>
+            app.qaforge.io
+          </span>
+        </div>
+        {/* Right icons */}
+        <div className="ml-auto flex items-center gap-2">
+          <Bell size={11} style={{ color: "rgba(255,255,255,0.2)" }} />
+          <div className="flex items-center gap-1.5">
+            <div
+              className="w-6 h-6 rounded-full flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg,#6366f1,#4f46e5)" }}
+            >
+              <span className="text-[8px] font-bold text-white">V</span>
             </div>
-            <span className="text-[10px] text-content-tertiary">Welcome back, Vignesw 👋</span>
+            <span className="text-[9px] hidden sm:block" style={{ color: "rgba(255,255,255,0.28)" }}>
+              Vignesh
+            </span>
           </div>
         </div>
+      </div>
 
-        {/* App layout */}
-        <div className="flex" style={{ height: "340px" }}>
-          {/* Sidebar */}
-          <div
-            className="flex flex-col w-32 shrink-0 py-3"
-            style={{ background: "rgba(8,8,14,0.8)", borderRight: "1px solid rgba(255,255,255,0.05)" }}
-          >
-            {/* Logo in sidebar */}
-            <div className="flex items-center gap-1.5 px-3 mb-4">
-              <div className="w-5 h-5 rounded bg-brand-500 flex items-center justify-center shrink-0">
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
-              </div>
-              <span className="text-[10px] font-bold text-white">QAForge</span>
-            </div>
+      {/* ── App shell ── */}
+      <div className="flex" style={{ height: "330px" }}>
+        {/* Sidebar */}
+        <div
+          className="flex flex-col w-28 shrink-0 py-3"
+          style={{
+            background: "rgba(4,5,16,0.9)",
+            borderRight: "1px solid rgba(255,255,255,0.04)",
+          }}
+        >
+          {/* Sidebar logo */}
+          <div className="flex items-center gap-1.5 px-3 mb-4 shrink-0">
+            <Image
+              src="/branding/qaforge-icon.png"
+              width={18}
+              height={18}
+              alt="QAForge"
+              style={{ borderRadius: "4px" }}
+            />
+            <span className="text-[10px] font-bold text-white">QAForge</span>
+          </div>
 
-            {[
-              { label: "Dashboard", active: true },
-              { label: "Projects", active: false },
-              { label: "Test Cases", active: false },
-              { label: "Bug Reports", active: false },
-              { label: "Test Data", active: false },
-              { label: "API Tests", active: false },
-              { label: "Automation", active: false },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-2 px-3 py-1.5 mx-1 rounded-md"
+          {sidebarItems.map((item) => (
+            <div
+              key={item.label}
+              className="flex items-center gap-2 mx-1.5 px-2.5 py-1.5 rounded-lg mb-0.5"
+              style={{
+                background: item.active ? "rgba(99,102,241,0.15)" : "transparent",
+                borderLeft: item.active
+                  ? "2px solid rgba(99,102,241,0.7)"
+                  : "2px solid transparent",
+              }}
+            >
+              <span
                 style={{
-                  background: item.active ? "rgba(99,102,241,0.15)" : "transparent",
-                  borderLeft: item.active ? "2px solid rgba(99,102,241,0.6)" : "2px solid transparent",
+                  color: item.active ? "#818cf8" : "rgba(255,255,255,0.28)",
+                  display: "flex",
+                }}
+              >
+                {item.icon}
+              </span>
+              <span
+                className="text-[9.5px]"
+                style={{
+                  color: item.active ? "#a5b4fc" : "rgba(255,255,255,0.28)",
+                  fontWeight: item.active ? 600 : 400,
+                }}
+              >
+                {item.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Main content */}
+        <div className="flex-1 flex flex-col p-4 gap-3 overflow-hidden min-w-0">
+          {/* Top bar */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div
+              className="flex-1 flex items-center gap-2 h-7 rounded-lg px-3"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <Search size={10} style={{ color: "rgba(255,255,255,0.2)" }} />
+              <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>
+                Search projects, tests…
+              </span>
+            </div>
+            <div
+              className="h-7 px-3 rounded-lg flex items-center gap-1.5 text-[10px] font-semibold text-white shrink-0 cursor-pointer"
+              style={{
+                background: "linear-gradient(135deg, #6366f1, #4f46e5)",
+                boxShadow: "0 0 12px rgba(99,102,241,0.3)",
+              }}
+            >
+              <span>+ New</span>
+            </div>
+          </div>
+
+          {/* Welcome */}
+          <div className="shrink-0">
+            <div className="text-[11px] font-semibold text-white">
+              Welcome back, Vignesh! 👋
+            </div>
+            <div className="text-[9px]" style={{ color: "rgba(255,255,255,0.3)" }}>
+              Here&apos;s what&apos;s happening with your QA projects today.
+            </div>
+          </div>
+
+          {/* Metric cards */}
+          <div className="grid grid-cols-4 gap-2 shrink-0">
+            <MetricCard
+              value="12"
+              label="Projects"
+              icon={<FolderKanban size={13} />}
+              accentColor="#818cf8"
+              bgColor="rgba(99,102,241,0.07)"
+            />
+            <MetricCard
+              value="246"
+              label="Test Cases"
+              icon={<TestTube2 size={13} />}
+              accentColor="#22d3ee"
+              bgColor="rgba(34,211,238,0.07)"
+            />
+            <MetricCard
+              value="36"
+              label="Bug Reports"
+              icon={<Bug size={13} />}
+              accentColor="#f87171"
+              bgColor="rgba(239,68,68,0.07)"
+            />
+            <MetricCard
+              value="18"
+              label="API Tests"
+              icon={<Zap size={13} />}
+              accentColor="#4ade80"
+              bgColor="rgba(74,222,128,0.07)"
+            />
+          </div>
+
+          {/* Recent projects */}
+          <div className="flex flex-col gap-1.5 shrink-0">
+            <div className="flex items-center justify-between">
+              <span
+                className="text-[9px] font-semibold uppercase tracking-wider"
+                style={{ color: "rgba(255,255,255,0.25)" }}
+              >
+                Recent Projects
+              </span>
+              <span
+                className="text-[9px] flex items-center gap-0.5"
+                style={{ color: "#818cf8" }}
+              >
+                View all <ChevronRight size={9} />
+              </span>
+            </div>
+            {projects.map((p) => (
+              <div
+                key={p.name}
+                className="flex items-center gap-2.5 rounded-lg px-3 py-1.5"
+                style={{
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.04)",
                 }}
               >
                 <div
-                  className="w-1.5 h-1.5 rounded-sm"
-                  style={{ background: item.active ? "#818cf8" : "rgba(255,255,255,0.2)" }}
-                  aria-hidden="true"
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: p.dot }}
                 />
                 <span
-                  className="text-[10px]"
-                  style={{ color: item.active ? "#818cf8" : "rgba(255,255,255,0.35)" }}
+                  className="flex-1 text-[10px] truncate"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
                 >
-                  {item.label}
+                  {p.name}
+                </span>
+                <span
+                  className="text-[9px] px-2 py-0.5 rounded-full font-medium shrink-0"
+                  style={{
+                    color: "#4ade80",
+                    background: "rgba(74,222,128,0.1)",
+                    border: "1px solid rgba(74,222,128,0.18)",
+                  }}
+                >
+                  {p.status}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Main area */}
-          <div className="flex-1 p-4 overflow-hidden flex flex-col gap-3">
-            {/* Search bar row */}
-            <div className="flex items-center gap-3">
-              <div
-                className="flex-1 flex items-center gap-2 rounded-lg h-7 px-3"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
-              >
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2" />
-                  <path d="M9 9l-2-2" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2" />
-                </svg>
-                <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>Search…</span>
-              </div>
-              <div
-                className="h-7 px-3 rounded-lg flex items-center text-[10px] font-medium text-white"
-                style={{ background: "#6366f1" }}
-              >
-                + New
-              </div>
-            </div>
-
-            {/* Stats row */}
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { label: "Projects", value: "12", color: "#818cf8", bg: "rgba(99,102,241,0.1)" },
-                { label: "Test Cases", value: "246", color: "#60a5fa", bg: "rgba(59,130,246,0.1)" },
-                { label: "Bug Reports", value: "36", color: "#f87171", bg: "rgba(239,68,68,0.1)" },
-                { label: "API Tests", value: "18", color: "#4ade80", bg: "rgba(34,197,94,0.1)" },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-xl p-2.5"
-                  style={{ background: s.bg, border: `1px solid ${s.color}22` }}
-                >
-                  <div className="text-base font-bold mb-0.5" style={{ color: s.color }}>{s.value}</div>
-                  <div className="text-[9px]" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Recent projects label */}
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
-                Recent Projects
-              </span>
-              <span className="text-[9px]" style={{ color: "#818cf8" }}>View all →</span>
-            </div>
-
-            {/* Project rows */}
-            <div className="flex flex-col gap-1.5">
-              {[
-                { name: "AIGAGA", tag: "Active", tagColor: "#22c55e", tagBg: "rgba(34,197,94,0.12)" },
-                { name: "InviteDesign", tag: "Active", tagColor: "#22c55e", tagBg: "rgba(34,197,94,0.12)" },
-                { name: "Driver Life Simulator", tag: "Active", tagColor: "#22c55e", tagBg: "rgba(34,197,94,0.12)" },
-              ].map((p) => (
-                <div
-                  key={p.name}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
-                >
-                  <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: p.tagColor }} aria-hidden="true" />
-                  <span className="flex-1 text-[10px] truncate" style={{ color: "rgba(255,255,255,0.65)" }}>{p.name}</span>
-                  <span
-                    className="text-[9px] px-2 py-0.5 rounded-full font-medium"
-                    style={{ color: p.tagColor, background: p.tagBg }}
-                  >
-                    {p.tag}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Bar chart */}
-            <div className="mt-auto flex items-end gap-1" style={{ height: "36px" }}>
-              {[20, 35, 25, 55, 40, 65, 45, 75, 55, 70, 50, 80, 60, 85, 65, 90].map((h, i) => (
-                <div
-                  key={i}
-                  className="flex-1 rounded-sm"
-                  style={{
-                    height: `${h}%`,
-                    background: i % 2 === 0 ? "rgba(99,102,241,0.5)" : "rgba(139,92,246,0.35)",
-                  }}
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating badge — test count */}
-      <div
-        className="absolute -bottom-5 -left-6 rounded-xl px-3 py-2.5 shadow-xl"
-        style={{
-          background: "rgba(13,13,20,0.95)",
-          border: "1px solid rgba(99,102,241,0.3)",
-          backdropFilter: "blur(12px)",
-        }}
-        aria-hidden="true"
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-            style={{ background: "rgba(99,102,241,0.15)" }}
-          >
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-              <path d="M2 3.5h10M2 7h7M2 10.5h8.5" stroke="#818cf8" strokeWidth="1.3" strokeLinecap="round" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-[11px] font-semibold text-white">248 Test Cases</div>
-            <div className="text-[9px]" style={{ color: "#4ade80" }}>↑ 12 generated</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating badge — AI */}
-      <div
-        className="absolute -top-5 -right-6 rounded-xl px-3 py-2.5 shadow-xl"
-        style={{
-          background: "rgba(13,13,20,0.95)",
-          border: "1px solid rgba(139,92,246,0.3)",
-          backdropFilter: "blur(12px)",
-        }}
-        aria-hidden="true"
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-            style={{ background: "rgba(139,92,246,0.15)" }}
-          >
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-              <path d="M7 1.5L8.3 5.2 12 6.5 8.3 7.8 7 11.5 5.7 7.8 2 6.5 5.7 5.2 7 1.5Z" stroke="#a78bfa" strokeWidth="1.1" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-[11px] font-semibold text-white">AI Generating</div>
-            <div className="text-[9px]" style={{ color: "rgba(255,255,255,0.4)" }}>Playwright tests…</div>
+          {/* Activity chart */}
+          <div className="mt-auto">
+            <ActivityChart />
           </div>
         </div>
       </div>
@@ -249,74 +414,104 @@ function DashboardMockup(): React.JSX.Element {
   );
 }
 
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 // Hero Section
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
 
 export function HeroSection(): React.JSX.Element {
   return (
     <section
-      className="relative overflow-hidden pt-12 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32"
+      className="relative overflow-hidden"
+      style={{ background: "#030712", minHeight: "720px" }}
       aria-labelledby="hero-heading"
-      style={{ background: "#030712" }}
     >
-      {/* Deep nebula background */}
-      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        {/* Grid */}
+      {/* ── Background effects ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Subtle grid */}
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
+              "linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
           }}
         />
-        {/* Large blue-purple center glow */}
+        {/* Primary violet glow — top-left */}
         <div
-          className="absolute"
+          className="absolute rounded-full"
+          style={{
+            top: "-15%",
+            left: "-10%",
+            width: "700px",
+            height: "700px",
+            background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 65%)",
+            filter: "blur(40px)",
+          }}
+        />
+        {/* Blue glow — top-right */}
+        <div
+          className="absolute rounded-full"
           style={{
             top: "-10%",
-            left: "20%",
-            width: "70%",
-            height: "80%",
-            background:
-              "radial-gradient(ellipse at 50% 30%, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 30%, rgba(59,130,246,0.1) 60%, transparent 80%)",
-            filter: "blur(60px)",
+            right: "-5%",
+            width: "500px",
+            height: "500px",
+            background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%)",
+            filter: "blur(50px)",
           }}
         />
-        {/* Extra deep blue bottom */}
+        {/* Cyan accent — mid-right */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            top: "30%",
+            right: "10%",
+            width: "300px",
+            height: "300px",
+            background: "radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 65%)",
+            filter: "blur(40px)",
+          }}
+        />
+        {/* Bottom fade */}
         <div
           className="absolute bottom-0 left-0 right-0"
           style={{
-            height: "50%",
-            background:
-              "linear-gradient(to top, rgba(3,7,18,0.9) 0%, transparent 100%)",
+            height: "200px",
+            background: "linear-gradient(to top, #030712 0%, transparent 100%)",
           }}
         />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* ---- LEFT ---- */}
-          <div className="flex flex-col gap-5 lg:gap-6">
+      {/* ── Content ── */}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-center">
+
+          {/* ─── LEFT — Hero copy ─── */}
+          <div className="flex flex-col gap-6 order-1">
+
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 self-start">
+            <div className="self-start">
               <div
-                className="flex items-center gap-2 rounded-full px-3 py-1"
+                className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-[0.18em] uppercase"
                 style={{
-                  background: "rgba(99,102,241,0.12)",
-                  border: "1px solid rgba(99,102,241,0.3)",
+                  color: "#a5b4fc",
+                  background: "rgba(99,102,241,0.1)",
+                  border: "1px solid rgba(99,102,241,0.28)",
+                  boxShadow: "0 0 12px rgba(99,102,241,0.12)",
                 }}
               >
                 <span
-                  className="text-[10px] font-bold tracking-[0.18em] uppercase"
-                  style={{ color: "#818cf8" }}
-                >
-                  AI-Powered QA Engineering Platform
-                </span>
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: "#818cf8" }}
+                />
+                AI-Powered QA Engineering Platform
                 <span
-                  className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full"
-                  style={{ background: "rgba(99,102,241,0.3)", color: "#c7d2fe" }}
+                  className="px-1.5 py-0.5 rounded-full text-[8px] font-bold"
+                  style={{
+                    background: "rgba(99,102,241,0.3)",
+                    color: "#c7d2fe",
+                    border: "1px solid rgba(99,102,241,0.35)",
+                  }}
                 >
                   Platform
                 </span>
@@ -326,87 +521,198 @@ export function HeroSection(): React.JSX.Element {
             {/* Headline */}
             <h1
               id="hero-heading"
-              className="font-bold tracking-tight leading-[1]"
-              style={{ fontSize: "clamp(2rem, 3vw, 10rem)" }}
+              className="font-bold tracking-tight leading-[1.08] text-white"
+              style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.5rem)" }}
             >
-              <span className="text-white">Turn any web application</span>
+              Turn any web application
               <br />
-              <span className="text-white">into a </span>
+              into a{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, #818cf8 0%, #a78bfa 45%, #60a5fa 100%)",
+                  background:
+                    "linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #60a5fa 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                 }}
               >
-                production-ready QA
+                production-ready
                 <br />
-                automation framework.
+                QA automation framework.
               </span>
             </h1>
 
-            {/* Subtext */}
-            <p className="text-sm sm:text-base leading-relaxed max-w-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
+            {/* Description */}
+            <p
+              className="text-base sm:text-lg leading-relaxed max-w-lg"
+              style={{ color: "rgba(255,255,255,0.5)" }}
+            >
               Generate test cases, bug reports, test data, API tests and
               Playwright automation — powered by AI.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
+              {/* Primary */}
               <Link
                 href="/register"
-                className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-lg text-sm font-semibold text-white transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+                className="relative inline-flex items-center justify-center gap-2 h-12 px-7 rounded-xl text-sm font-semibold text-white overflow-hidden transition-transform duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent group"
                 style={{
-                  background: "linear-gradient(135deg, #6366f1 0%, #7c3aed 100%)",
-                  boxShadow: "0 0 24px rgba(99,102,241,0.35), 0 4px 12px rgba(0,0,0,0.3)",
+                  background:
+                    "linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #3b82f6 100%)",
+                  boxShadow:
+                    "0 0 28px rgba(99,102,241,0.45), 0 4px 16px rgba(0,0,0,0.35)",
                 }}
               >
-                Get Started Free
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <span className="relative z-10 flex items-center gap-2">
+                  Get Started Free
+                  <ChevronRight size={16} />
+                </span>
+                <span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #60a5fa 100%)",
+                  }}
+                  aria-hidden="true"
+                />
               </Link>
+
+              {/* Secondary */}
               <button
                 type="button"
-                className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-lg text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2.5 h-12 px-7 rounded-xl text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent group hover:scale-[1.01]"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.75)",
+                  color: "rgba(255,255,255,0.7)",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.border =
+                    "1px solid rgba(99,102,241,0.4)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                    "0 0 16px rgba(99,102,241,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.border =
+                    "1px solid rgba(255,255,255,0.1)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2" />
-                  <path d="M5.5 4.5l4 2.5-4 2.5V4.5Z" fill="currentColor" />
-                </svg>
+                <Play
+                  size={14}
+                  className="text-brand-400"
+                  fill="currentColor"
+                  aria-hidden="true"
+                />
                 Watch Demo
               </button>
             </div>
 
-            {/* Trust row */}
+            {/* Trust micro-benefits */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
               {[
-                "Built for QA Engineers",
                 "No credit card required",
                 "Get started in minutes",
-                "Don't waste time in manual",
-                "Built by QA Engineer",
+                "Built for QA Engineers",
               ].map((item) => (
-                <div key={item} className="flex items-center gap-1.5">
-                  <svg width="15" height="15" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                    <circle cx="6.5" cy="6.5" r="5.5" stroke="#4ade80" strokeWidth="1" />
-                    <path d="M4 6.5l2 2 3-3" stroke="#4ade80" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                <div
+                  key={item}
+                  className="flex items-center gap-1.5 text-[11px]"
+                  style={{ color: "rgba(255,255,255,0.38)" }}
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 13 13"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="6.5" cy="6.5" r="5.8" stroke="#4ade80" strokeWidth="1"/>
+                    <path
+                      d="M4 6.5l2 2 3-3"
+                      stroke="#4ade80"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
-                  <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>{item}</span>
+                  {item}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ---- RIGHT ---- */}
-          <div className="relative pt-6 pb-8 pr-4 lg:pr-0">
-            <DashboardMockup />
+          {/* ─── RIGHT — Dashboard ─── */}
+          <div className="relative order-2 flex items-center justify-center">
+            {/* Outer ambient glow */}
+            <div
+              className="absolute inset-0 -z-10 rounded-3xl"
+              aria-hidden="true"
+              style={{
+                background:
+                  "radial-gradient(ellipse 75% 75% at 50% 45%, rgba(99,102,241,0.22) 0%, rgba(59,130,246,0.1) 50%, transparent 75%)",
+                filter: "blur(30px)",
+                transform: "scale(1.15)",
+              }}
+            />
+
+            {/* Dashboard + floating cards wrapper */}
+            <div className="relative w-full max-w-2xl mx-auto px-6 lg:px-2 xl:px-0 pt-8 pb-8">
+              <DashboardMockup />
+
+              {/* ── Floating cards — positioned relative to the wrapper ── */}
+
+              {/* Test Cases — top-left */}
+              <FloatingCard
+                icon={<TestTube2 size={15} />}
+                label="Test Cases"
+                value="248 generated"
+                accentColor="#22d3ee"
+                glowColor="#22d3ee"
+                style={{ top: "0px", left: "-4px", zIndex: 10 }}
+              />
+
+              {/* Bug Reports — top-right */}
+              <FloatingCard
+                icon={<Bug size={15} />}
+                label="Bug Reports"
+                value="36 found"
+                accentColor="#f87171"
+                glowColor="#ef4444"
+                style={{ top: "0px", right: "-4px", zIndex: 10 }}
+              />
+
+              {/* Playwright — bottom-left */}
+              <FloatingCard
+                icon={<FileCode2 size={15} />}
+                label="Playwright Automation"
+                value="18 scripts"
+                accentColor="#818cf8"
+                glowColor="#6366f1"
+                style={{ bottom: "0px", left: "-4px", zIndex: 10 }}
+              />
+
+              {/* API Tests — bottom-right */}
+              <FloatingCard
+                icon={<Zap size={15} />}
+                label="API Tests"
+                value="124 passing"
+                accentColor="#4ade80"
+                glowColor="#22c55e"
+                style={{ bottom: "0px", right: "-4px", zIndex: 10 }}
+              />
+
+              {/* Test Data — right-center */}
+              <FloatingCard
+                icon={<Cpu size={15} />}
+                label="AI Generating"
+                value="Test data…"
+                accentColor="#a78bfa"
+                glowColor="#7c3aed"
+                style={{ top: "50%", right: "-4px", transform: "translateY(-50%)", zIndex: 10 }}
+              />
+            </div>
           </div>
         </div>
       </div>
