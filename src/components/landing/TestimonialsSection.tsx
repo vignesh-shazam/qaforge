@@ -33,7 +33,7 @@ function Stars({ count }: { count: number }): React.JSX.Element {
   return (
     <div className="flex gap-0.5" aria-label={`${count} out of 5 stars`}>
       {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+        <svg key={`star-${i}`} width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
           <path d="M6.5 1l1.3 3.5H11.5L8.8 6.5l.9 3.5L6.5 8.3 3.3 10l.9-3.5L1.5 4.5h3.7L6.5 1Z" fill="#fbbf24"/>
         </svg>
       ))}

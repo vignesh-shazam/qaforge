@@ -39,13 +39,13 @@ export function TrustSection(): React.JSX.Element {
       style={{ background: "#030712", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <p
+        <h2
           id="trust-heading"
           className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] mb-7"
           style={{ color: "rgba(255,255,255,0.25)" }}
         >
           Trusted by QA &amp; Engineering Teams
-        </p>
+        </h2>
 
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-12">
           {logos.map((logo) => (

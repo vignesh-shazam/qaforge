@@ -15,6 +15,19 @@ export const metadata: Metadata = {
   title: "QAForge — AI-Powered QA Automation Platform",
   description:
     "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
+  openGraph: {
+    type: "website",
+    title: "QAForge — AI-Powered QA Automation Platform",
+    description:
+      "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
+    siteName: "QAForge",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QAForge — AI-Powered QA Automation Platform",
+    description:
+      "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
+  },
 };
 
 export default function LandingPage(): React.JSX.Element {

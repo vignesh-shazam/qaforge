@@ -78,7 +78,7 @@ function ActivityChart(): React.JSX.Element {
       </div>
       <div className="flex items-end gap-[3px]" style={{ height: "32px" }}>
         {BARS.map((h, i) => (
-          <div key={i} className="flex-1 rounded-sm" style={{
+          <div key={`bar-${i}`} className="flex-1 rounded-sm" style={{
             height: `${h}%`,
             background: i > BARS.length - 5 ? "linear-gradient(180deg,#818cf8,#6366f1)" : "rgba(99,102,241,0.25)",
           }} />
@@ -410,6 +410,8 @@ function DashboardMockup(): React.JSX.Element {
   return (
     <div
       className="relative rounded-2xl overflow-hidden transition-all duration-300"
+      role="presentation"
+      aria-hidden="true"
       style={{
         background: "rgba(8,9,22,0.97)",
         border: "1px solid rgba(99,102,241,0.2)",
