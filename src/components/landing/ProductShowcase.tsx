@@ -1,83 +1,177 @@
+"use client";
+
+import Image from "next/image";
+
+// ── Sidebar nav items ──────────────────────────────────────────────────────
+
+const sidebarItems = [
+  {
+    label: "Dashboard",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".7"/>
+        <rect x="6.5" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
+        <rect x="1" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
+        <rect x="6.5" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Projects",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <path d="M1 4h10M1 4V9.5a1 1 0 001 1h8a1 1 0 001-1V4M1 4l1.5-2.5h7L11 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Test Cases",
+    active: true,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1" width="9" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.1"/>
+        <path d="M3.5 4h5M3.5 6.5h3.5M3.5 9h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Bug Reports",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="1.1"/>
+        <path d="M6 3V1.5M6 10.5V9M3 6H1.5M10.5 6H9" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Test Data",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <ellipse cx="6" cy="4" rx="4" ry="1.8" stroke="currentColor" strokeWidth="1.1"/>
+        <path d="M2 4v4c0 1 1.8 1.8 4 1.8s4-.8 4-1.8V4" stroke="currentColor" strokeWidth="1.1"/>
+      </svg>
+    ),
+  },
+  {
+    label: "API Tests",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <path d="M1.5 6h9M7 2.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Automation",
+    active: false,
+    icon: (
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="2" stroke="currentColor" strokeWidth="1.1"/>
+        <path d="M6 1v1.5M6 9.5V11M1 6h1.5M9.5 6H11M2.6 2.6l1.1 1.1M8.3 8.3l1.1 1.1M2.6 9.4l1.1-1.1M8.3 3.7l1.1-1.1" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+] as const;
+
+// ── Mock UI ────────────────────────────────────────────────────────────────
+
 function TestCaseGeneratorUI(): React.JSX.Element {
   return (
     <div
-      className="rounded-2xl overflow-hidden shadow-2xl"
+      className="showcase-mockup rounded-2xl overflow-hidden transition-all duration-300"
       style={{
-        background: "rgba(10,10,16,0.95)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "rgba(8,9,20,0.97)",
+        border: "1px solid rgba(99,102,241,0.2)",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLDivElement;
+        el.style.border = "1px solid rgba(99,102,241,0.6)";
+        el.style.boxShadow = "0 0 0 1px rgba(99,102,241,0.22), 0 0 28px rgba(99,102,241,0.45), 0 0 60px rgba(99,102,241,0.18)";
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLDivElement;
+        el.style.border = "1px solid rgba(99,102,241,0.2)";
+        el.style.boxShadow = "none";
       }}
     >
-      {/* Window bar */}
+      {/* ── Top nav bar ── */}
       <div
         className="flex items-center gap-3 px-4 py-2.5"
-        style={{ background: "rgba(6,6,10,0.95)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        style={{ background: "rgba(5,6,16,0.98)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <div className="flex gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ef4444" }} aria-hidden="true"/>
-          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#f59e0b" }} aria-hidden="true"/>
-          <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#22c55e" }} aria-hidden="true"/>
+        {/* Logo */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <Image src="/branding/qaforge-icon.png" width={16} height={16} alt="QAForge" style={{ borderRadius: "4px" }} />
+          <span className="text-[10px] font-bold text-white tracking-tight">QAForge</span>
         </div>
-        <span className="text-[10px] font-medium ml-2" style={{ color: "rgba(255,255,255,0.35)" }}>
-          QAForge — Test Case Generator
-        </span>
+
+        {/* Search bar */}
+        <div
+          className="flex-1 flex items-center gap-2 h-6 rounded-md px-2.5 mx-2"
+          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+        >
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1"/>
+            <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1" strokeLinecap="round"/>
+          </svg>
+          <span className="text-[9px] flex-1" style={{ color: "rgba(255,255,255,0.2)" }}>Search projects, tests…</span>
+        </div>
+
+        {/* Avatar */}
+        <div
+          className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+          style={{ background: "linear-gradient(135deg,#6366f1,#4f46e5)" }}
+        >
+          <span className="text-[8px] font-bold text-white">V</span>
+        </div>
       </div>
 
-      <div className="flex" style={{ minHeight: "360px" }}>
-        {/* Left panel — sidebar */}
-        <div
-          className="w-28 shrink-0 flex flex-col py-3 gap-0.5"
-          style={{ borderRight: "1px solid rgba(255,255,255,0.05)", background: "rgba(6,6,10,0.8)" }}
-        >
-          {/* Logo */}
-          <div className="flex items-center gap-1.5 px-3 mb-3">
-            <div className="w-4 h-4 rounded bg-brand-500 flex items-center justify-center">
-              <svg width="8" height="8" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <path d="M2 5l2.5 2.5 3.5-3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="text-[9px] font-bold text-white">QAForge</span>
-          </div>
+      {/* ── App shell ── */}
+      <div className="flex" style={{ minHeight: "320px" }}>
 
-          {[
-            { label: "Dashboard", active: false },
-            { label: "Projects", active: false },
-            { label: "Test Cases", active: true },
-            { label: "Bug Reports", active: false },
-            { label: "Test Data", active: false },
-            { label: "API Tests", active: false },
-            { label: "Automation", active: false },
-          ].map((item) => (
+        {/* ── Sidebar ── */}
+        <div
+          className="hidden sm:flex w-28 shrink-0 flex-col py-2 gap-0.5"
+          style={{ background: "rgba(4,5,14,0.95)", borderRight: "1px solid rgba(255,255,255,0.04)" }}
+        >
+          {sidebarItems.map((item) => (
             <div
               key={item.label}
-              className="px-3 py-1.5 mx-1 rounded-md text-[9px]"
+              className="flex items-center gap-2 mx-1.5 px-2 py-1.5 rounded-lg"
               style={{
-                background: item.active ? "rgba(99,102,241,0.15)" : "transparent",
+                background: item.active ? "rgba(99,102,241,0.18)" : "transparent",
                 color: item.active ? "#818cf8" : "rgba(255,255,255,0.3)",
-                fontWeight: item.active ? 600 : 400,
               }}
             >
-              {item.label}
+              <span style={{ color: item.active ? "#818cf8" : "rgba(255,255,255,0.3)", display: "flex" }}>
+                {item.icon}
+              </span>
+              <span className="text-[9px]" style={{ fontWeight: item.active ? 600 : 400 }}>
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
 
-        {/* Center — main content */}
-        <div className="flex-1 flex flex-col p-4 gap-3 overflow-hidden">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-[9px]" style={{ color: "rgba(255,255,255,0.3)" }}>
-            <span>Projects</span><span>/</span><span style={{ color: "#818cf8" }}>Test Case Generator</span>
-          </div>
+        {/* ── Main panel ── */}
+        <div className="flex-1 flex flex-col p-4 gap-3 min-w-0">
+          {/* Heading */}
+          <h3 className="text-[13px] font-bold text-white">Test Case Generator</h3>
 
           {/* Tabs */}
-          <div className="flex gap-1">
-            {["From URL", "From Requirements", "Manual"].map((tab, i) => (
+          <div className="flex gap-1.5">
+            {["From URL", "From Requirements", "Manual Input"].map((tab, i) => (
               <div
                 key={tab}
                 className="px-2.5 py-1 rounded-md text-[9px] font-medium"
                 style={{
-                  background: i === 0 ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.04)",
-                  color: i === 0 ? "#818cf8" : "rgba(255,255,255,0.3)",
-                  border: i === 0 ? "1px solid rgba(99,102,241,0.3)" : "1px solid rgba(255,255,255,0.06)",
+                  background: i === 0 ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.04)",
+                  color: i === 0 ? "#a5b4fc" : "rgba(255,255,255,0.3)",
+                  border: i === 0 ? "1px solid rgba(99,102,241,0.35)" : "1px solid rgba(255,255,255,0.06)",
                 }}
               >
                 {tab}
@@ -85,49 +179,46 @@ function TestCaseGeneratorUI(): React.JSX.Element {
             ))}
           </div>
 
-          {/* URL input */}
-          <div
-            className="flex items-center gap-2 rounded-lg px-3 h-8"
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
-          >
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2"/>
-              <path d="M9.5 9.5l-2-2" stroke="rgba(255,255,255,0.25)" strokeWidth="1.2"/>
-            </svg>
-            <span className="text-[10px] font-mono flex-1" style={{ color: "rgba(255,255,255,0.4)" }}>
-              https://app.example.com/login
-            </span>
+          {/* Application URL label + input */}
+          <div>
+            <p className="text-[9px] font-semibold mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Application URL</p>
             <div
-              className="h-5 px-2 rounded text-[9px] font-semibold flex items-center"
-              style={{ background: "#6366f1", color: "white" }}
+              className="flex items-center gap-2 rounded-lg px-3 h-7"
+              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)" }}
             >
-              Analyze
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1"/>
+                <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1" strokeLinecap="round"/>
+              </svg>
+              <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+                https://example.com
+              </span>
             </div>
           </div>
 
           {/* Generation Options */}
           <div>
-            <p className="text-[9px] font-semibold uppercase tracking-wider mb-2" style={{ color: "rgba(255,255,255,0.25)" }}>
+            <p className="text-[9px] font-semibold uppercase tracking-wider mb-2" style={{ color: "rgba(255,255,255,0.3)" }}>
               Generation Options
             </p>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="flex flex-col gap-1.5">
               {[
-                { label: "Functional tests", checked: true },
-                { label: "Negative tests", checked: true },
-                { label: "Include accessibility", checked: false },
-                { label: "Include UI/UX tests", checked: false },
+                { label: "Include functional test cases", checked: true },
+                { label: "Include negative test cases", checked: true },
+                { label: "Include UI/UX test cases", checked: true },
+                { label: "Include accessibility test cases", checked: true },
               ].map((opt) => (
                 <div key={opt.label} className="flex items-center gap-2">
                   <div
                     className="w-3.5 h-3.5 rounded flex items-center justify-center shrink-0"
                     style={{
-                      background: opt.checked ? "#6366f1" : "rgba(255,255,255,0.06)",
-                      border: opt.checked ? "none" : "1px solid rgba(255,255,255,0.12)",
+                      background: opt.checked ? "#6366f1" : "rgba(255,255,255,0.05)",
+                      border: opt.checked ? "none" : "1px solid rgba(255,255,255,0.1)",
                     }}
                   >
                     {opt.checked && (
                       <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
-                        <path d="M1.5 4l2 2 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round"/>
+                        <path d="M1.5 4l2 2 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     )}
                   </div>
@@ -139,57 +230,10 @@ function TestCaseGeneratorUI(): React.JSX.Element {
 
           {/* Generate button */}
           <div
-            className="h-8 rounded-lg flex items-center justify-center text-[11px] font-semibold text-white"
-            style={{ background: "linear-gradient(135deg, #6366f1, #7c3aed)" }}
+            className="h-8 rounded-lg flex items-center justify-center text-[11px] font-semibold text-white mt-auto"
+            style={{ background: "linear-gradient(135deg,#6366f1,#4f46e5)", boxShadow: "0 0 16px rgba(99,102,241,0.4)" }}
           >
             Generate Test Cases
-          </div>
-        </div>
-
-        {/* Right panel — results */}
-        <div
-          className="w-52 shrink-0 flex flex-col p-3 gap-2 overflow-hidden"
-          style={{ borderLeft: "1px solid rgba(255,255,255,0.05)" }}
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>Results</span>
-            <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ color: "#4ade80", background: "rgba(34,197,94,0.12)" }}>
-              12 cases
-            </span>
-          </div>
-
-          {[
-            { id: "TC-001", title: "Valid login with correct credentials", type: "Func", pass: true },
-            { id: "TC-002", title: "Login fails with wrong password", type: "Neg", pass: true },
-            { id: "TC-003", title: "Empty email shows validation error", type: "Neg", pass: true },
-            { id: "TC-004", title: "Forgot password link is visible", type: "UI", pass: false },
-            { id: "TC-005", title: "Session persists after page refresh", type: "Func", pass: true },
-          ].map((tc) => (
-            <div
-              key={tc.id}
-              className="rounded-lg p-2 flex flex-col gap-1"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
-            >
-              <div className="flex items-center gap-1.5">
-                <div
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ background: tc.pass ? "#4ade80" : "#fbbf24" }}
-                  aria-hidden="true"
-                />
-                <span className="text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>{tc.id}</span>
-                <span
-                  className="ml-auto text-[8px] px-1 py-0.5 rounded"
-                  style={{ color: "rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.06)" }}
-                >
-                  {tc.type}
-                </span>
-              </div>
-              <p className="text-[9px] leading-tight" style={{ color: "rgba(255,255,255,0.5)" }}>{tc.title}</p>
-            </div>
-          ))}
-
-          <div className="text-center text-[8px] mt-1" style={{ color: "rgba(255,255,255,0.2)" }}>
-            + 7 more test cases
           </div>
         </div>
       </div>
@@ -197,12 +241,16 @@ function TestCaseGeneratorUI(): React.JSX.Element {
   );
 }
 
+// ── Bullet list ────────────────────────────────────────────────────────────
+
 const bullets = [
-  "Multiple input methods — URL, Requirements, Manual",
+  "Multiple input methods (URL, Requirements, Manual)",
   "Functional, Negative, UI/UX & Accessibility cases",
-  "Edit, filter and export to your preferred format",
+  "Edit, filter and export to multiple formats",
   "Save directly to your projects",
 ] as const;
+
+// ── Section ────────────────────────────────────────────────────────────────
 
 export function ProductShowcase(): React.JSX.Element {
   return (
@@ -212,23 +260,51 @@ export function ProductShowcase(): React.JSX.Element {
       style={{ background: "#040810" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — UI mockup */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 xl:gap-20 items-center">
+
+          {/* ── Left — UI mockup ── */}
           <div className="relative order-2 lg:order-1">
-            {/* Glow */}
+            {/* Keyframes injected inline */}
+            <style>{`
+              @keyframes showcaseGlowPulse {
+                0%, 100% { opacity: 0.85; transform: scale(1); }
+                50%       { opacity: 1;    transform: scale(1.06); }
+              }
+              @keyframes showcaseGlowDrift {
+                0%, 100% { opacity: 0.7; transform: scale(1) translate(0, 0); }
+                33%       { opacity: 1;   transform: scale(1.08) translate(4%, -3%); }
+                66%       { opacity: 0.8; transform: scale(1.04) translate(-3%, 4%); }
+              }
+            `}</style>
+
+            {/* Strong inner glow — pulsing */}
             <div
-              className="absolute -inset-6 -z-10 rounded-3xl opacity-50"
+              className="absolute -z-10"
               aria-hidden="true"
               style={{
-                background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(99,102,241,0.2) 0%, transparent 70%)",
-                filter: "blur(30px)",
+                inset: "-60px -40px -60px -40px",
+                background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99,102,241,0.38) 0%, rgba(79,70,229,0.2) 40%, transparent 70%)",
+                filter: "blur(32px)",
+                animation: "showcaseGlowPulse 3.5s ease-in-out infinite",
+              }}
+            />
+            {/* Outer violet glow — slow drift */}
+            <div
+              className="absolute -z-10"
+              aria-hidden="true"
+              style={{
+                inset: "-100px -80px",
+                background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(139,92,246,0.16) 0%, transparent 65%)",
+                filter: "blur(50px)",
+                animation: "showcaseGlowDrift 6s ease-in-out infinite",
               }}
             />
             <TestCaseGeneratorUI />
           </div>
 
-          {/* Right — copy */}
+          {/* ── Right — copy ── */}
           <div className="flex flex-col gap-6 order-1 lg:order-2">
+            {/* Badge */}
             <div
               className="inline-flex items-center gap-2 self-start rounded-full px-3 py-1"
               style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)" }}
@@ -238,44 +314,57 @@ export function ProductShowcase(): React.JSX.Element {
               </span>
             </div>
 
-            <h2 id="showcase-heading" className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-              Generate comprehensive test cases in seconds.
+            <h2
+              id="showcase-heading"
+              className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight"
+            >
+              Generate comprehensive<br />test cases in seconds.
             </h2>
 
             <p className="text-sm sm:text-base leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-              Just enter your application URL or requirements, and let QAForge
-              generate structured test cases with scenarios, steps and expected
-              results.
+              Just enter your application URL or requirements, and let AI create
+              detailed, well-structured test cases with scenarios, steps and
+              expected results.
             </p>
 
+            {/* Bullet list */}
             <ul className="flex flex-col gap-3" role="list">
               {bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="mt-0.5 shrink-0" aria-hidden="true">
-                    <circle cx="8" cy="8" r="7" fill="rgba(34,197,94,0.15)"/>
-                    <path d="M5 8l2.5 2.5 3.5-3.5" stroke="#4ade80" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <li key={b} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
+                  <span className="shrink-0">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <circle cx="9" cy="9" r="8" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.3)" strokeWidth="0.9"/>
+                      <path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="#4ade80" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
                   {b}
                 </li>
               ))}
             </ul>
 
+            {/* Watch Demo button */}
             <button
               type="button"
-              className="inline-flex items-center gap-2 h-11 px-7 rounded-lg text-sm font-medium self-start transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="inline-flex items-center gap-2.5 h-11 px-6 rounded-xl text-sm font-semibold self-start transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.7)",
+                background: "linear-gradient(135deg,#6366f1,#4f46e5)",
+                color: "white",
+                boxShadow: "0 0 20px rgba(99,102,241,0.4)",
               }}
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.2"/>
-                <path d="M6.5 5.5l4 2.5-4 2.5V5.5Z" fill="currentColor"/>
-              </svg>
+              {/* Play circle */}
+              <span
+                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                style={{ background: "rgba(255,255,255,0.2)" }}
+              >
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                  <path d="M3.5 2.5l4 2.5-4 2.5V2.5Z" fill="white"/>
+                </svg>
+              </span>
               Watch Demo
             </button>
           </div>
+
         </div>
       </div>
     </section>
