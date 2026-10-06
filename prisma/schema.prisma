@@ -1,0 +1,52 @@
+// QAForge — Prisma Schema
+// V0.1 Foundation: User and Project models
+//
+// Run `npm run prisma:generate` after schema changes.
+// Run `npm run prisma:migrate` to apply to a local database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// User
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String?
+  /// Stores a bcrypt/argon2 hash — never the plain-text password.
+  /// Populated in V0.2 when real authentication is implemented.
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  projects     Project[]
+
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Project
+// ---------------------------------------------------------------------------
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  /// The base URL of the application under test.
+  /// Optional in V0.1 — required for URL discovery in V0.4.
+  targetUrl   String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@map("projects")
+}
