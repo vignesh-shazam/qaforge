@@ -6,112 +6,142 @@ interface Feature {
   description: string;
   comingSoon?: boolean;
   iconBg: string;
+  iconGlow: string;
   iconColor: string;
 }
 
 const features: Feature[] = [
   {
-    iconBg: "rgba(99,102,241,0.15)",
-    iconColor: "#818cf8",
+    iconBg: "linear-gradient(135deg,#5b5ef4 0%,#6d46e8 100%)",
+    iconGlow: "rgba(99,102,241,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <rect x="2" y="2.5" width="14" height="3" rx="1.5" fill="#818cf8" opacity=".9"/>
-        <rect x="2" y="7.5" width="10" height="2.5" rx="1.25" fill="#818cf8" opacity=".6"/>
-        <rect x="2" y="12" width="12" height="2.5" rx="1.25" fill="#818cf8" opacity=".35"/>
+      /* Checklist / test case document */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect x="4" y="2" width="18" height="22" rx="3" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
+        <rect x="7" y="6" width="12" height="2.5" rx="1.25" fill="white" opacity=".9"/>
+        <rect x="7" y="10.5" width="8" height="2" rx="1" fill="white" opacity=".65"/>
+        <rect x="7" y="14.5" width="10" height="2" rx="1" fill="white" opacity=".45"/>
+        <path d="M7 18.5l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" opacity=".8"/>
       </svg>
     ),
     title: "Test Case Generator",
-    description: "Create detailed test cases structured and ready for use in requirements URLs.",
+    description: "Create detailed test cases from requirements or URLs.",
   },
   {
-    iconBg: "rgba(239,68,68,0.15)",
-    iconColor: "#f87171",
+    iconBg: "linear-gradient(135deg,#c0392b 0%,#e74c3c 100%)",
+    iconGlow: "rgba(239,68,68,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M3 5h12l-1 9H4L3 5Z" stroke="#f87171" strokeWidth="1.2" strokeLinejoin="round"/>
-        <circle cx="9" cy="2.5" r="1.5" fill="#f87171" opacity=".6"/>
-        <path d="M9 8v3M9 13h.01" stroke="#f87171" strokeWidth="1.2" strokeLinecap="round"/>
+      /* Bug / gear with exclamation */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="13" cy="13" r="7" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
+        <path d="M8.5 8.5A6.5 6.5 0 0 1 19.5 8.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" opacity=".5"/>
+        <path d="M13 9.5v5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+        <circle cx="13" cy="17" r="1" fill="white"/>
+        <path d="M6 13H4M22 13h-2M10 7l-1.5-2M16 7l1.5-2" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
       </svg>
     ),
     title: "Bug Report Generator",
-    description: "Turn observations into structured, ready-to-use bug reports.",
+    description: "Turn issues into structured, ready-to-use bug reports.",
   },
   {
-    iconBg: "rgba(59,130,246,0.15)",
-    iconColor: "#60a5fa",
+    iconBg: "linear-gradient(135deg,#0e9e82 0%,#14b8a6 100%)",
+    iconGlow: "rgba(20,184,166,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="14" height="14" rx="2.5" stroke="#60a5fa" strokeWidth="1.2"/>
-        <path d="M5.5 6h7M5.5 9h5M5.5 12h6" stroke="#60a5fa" strokeWidth="1.1" strokeLinecap="round"/>
+      /* Stacked database / data layers */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <ellipse cx="13" cy="8" rx="7" ry="2.8" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2"/>
+        <path d="M6 8v5c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8V8" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2"/>
+        <path d="M6 13v5c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8v-5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.2"/>
+        <path d="M10 8.5l1.5 1.5L14 7" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
     title: "Test Data Generator",
-    description: "Generate realistic, valid and edge-case test data instantly.",
+    description: "Generate valid, invalid and edge case test data instantly.",
   },
   {
-    iconBg: "rgba(245,158,11,0.15)",
-    iconColor: "#fbbf24",
+    iconBg: "linear-gradient(135deg,#7c5af0 0%,#5b8af7 100%)",
+    iconGlow: "rgba(99,102,241,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M3 5h12M5 2h8M6 5v10M12 5v10M3 15h12" stroke="#fbbf24" strokeWidth="1.2" strokeLinecap="round"/>
-        <circle cx="9" cy="10" r="2" stroke="#fbbf24" strokeWidth="1.1"/>
+      /* API dots / grid */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="2.8" fill="white" opacity=".9"/>
+        <circle cx="19" cy="7" r="2.8" fill="white" opacity=".9"/>
+        <circle cx="7" cy="19" r="2.8" fill="white" opacity=".6"/>
+        <circle cx="19" cy="19" r="2.8" fill="white" opacity=".6"/>
+        <circle cx="13" cy="13" r="2.8" fill="white" opacity=".75"/>
+        <path d="M9.8 7h6.4M7 9.8v6.4M19 9.8v6.4M9.8 19h6.4" stroke="rgba(255,255,255,0.35)" strokeWidth="1"/>
       </svg>
     ),
     title: "API Test Generator",
-    description: "Generate API tests from endpoints or OpenAPI specs directly.",
+    description: "Create API tests from endpoints or OpenAPI specs.",
   },
   {
-    iconBg: "rgba(139,92,246,0.15)",
-    iconColor: "#a78bfa",
+    iconBg: "linear-gradient(135deg,#1a7f37 0%,#16a34a 100%)",
+    iconGlow: "rgba(34,197,94,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <rect x="2" y="4" width="14" height="10" rx="2" stroke="#a78bfa" strokeWidth="1.2"/>
-        <path d="M7 7.5l2.5 1.5-2.5 1.5V7.5Z" fill="#a78bfa"/>
-        <path d="M12 7.5v3" stroke="#a78bfa" strokeWidth="1.1" strokeLinecap="round"/>
+      /* Code brackets — Playwright */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <path d="M9 7L4 13l5 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity=".9"/>
+        <path d="M17 7l5 6-5 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity=".9"/>
+        <path d="M15 5l-4 16" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
     ),
     title: "Playwright Automation",
-    description: "Generate Playwright tests with Page Objects from your web application.",
+    description: "Generate Playwright tests and Page Objects.",
     comingSoon: true,
   },
   {
-    iconBg: "rgba(34,211,238,0.15)",
-    iconColor: "#22d3ee",
+    iconBg: "linear-gradient(135deg,#1d4ed8 0%,#2563eb 100%)",
+    iconGlow: "rgba(37,99,235,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <circle cx="5" cy="9" r="2.5" stroke="#22d3ee" strokeWidth="1.2"/>
-        <circle cx="13" cy="9" r="2.5" stroke="#22d3ee" strokeWidth="1.2"/>
-        <path d="M7.5 9h3" stroke="#22d3ee" strokeWidth="1.2"/>
-        <path d="M13 6.5l2.5 2.5-2.5 2.5" stroke="#22d3ee" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      /* Search / scan URL */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="11.5" cy="11.5" r="6.5" stroke="white" strokeWidth="1.8" opacity=".9"/>
+        <path d="M16.5 16.5L22 22" stroke="white" strokeWidth="2" strokeLinecap="round" opacity=".9"/>
+        <path d="M8.5 11.5h6M11.5 8.5v6" stroke="rgba(255,255,255,0.7)" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
     title: "URL → Automation",
-    description: "Discover and generate tests from any web application URL.",
+    description: "Discover and generate tests from any web application.",
     comingSoon: true,
   },
   {
-    iconBg: "rgba(244,114,182,0.15)",
-    iconColor: "#f472b6",
+    iconBg: "linear-gradient(135deg,#b91c87 0%,#ec4899 100%)",
+    iconGlow: "rgba(236,72,153,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <circle cx="9" cy="9" r="3" stroke="#f472b6" strokeWidth="1.2"/>
-        <circle cx="9" cy="9" r="7" stroke="#f472b6" strokeWidth="1" strokeDasharray="2.5 2"/>
+      /* Record / circle dot */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="20" height="20" rx="5" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
+        <circle cx="13" cy="13" r="5" fill="white" opacity=".9"/>
+        <circle cx="13" cy="13" r="2.5" fill="rgba(236,72,153,0.9)"/>
+        <circle cx="19.5" cy="6.5" r="2.5" fill="#ef4444"/>
       </svg>
     ),
     title: "Test Flow Recorder",
-    description: "Record user actions and convert to reusable automation scripts.",
+    description: "Record user actions and convert to automation.",
     comingSoon: true,
   },
   {
-    iconBg: "rgba(52,211,153,0.15)",
-    iconColor: "#34d399",
+    iconBg: "linear-gradient(135deg,#0f766e 0%,#14b8a6 100%)",
+    iconGlow: "rgba(20,184,166,0.35)",
+    iconColor: "#fff",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M9 2L11 6.5H16L12 9.5 13.5 14.5 9 11.5 4.5 14.5 6 9.5 2 6.5H7L9 2Z" stroke="#34d399" strokeWidth="1.1" strokeLinejoin="round"/>
+      /* AI sparkle / agent star */
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <path d="M13 3l2.2 6.2 6.3.5-4.8 4 1.7 6.3L13 16.5l-5.4 3.5 1.7-6.3L4.5 9.7l6.3-.5L13 3Z" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.4" strokeLinejoin="round"/>
+        <circle cx="19" cy="6" r="2" fill="white" opacity=".8"/>
+        <circle cx="7" cy="20" r="1.5" fill="white" opacity=".5"/>
       </svg>
     ),
     title: "AI QA Agent",
-    description: "Your AI-powered QA assistant for end-to-end automation.",
+    description: "Your intelligent QA assistant for end-to-end automation.",
     comingSoon: true,
   },
 ];
@@ -126,10 +156,13 @@ export function FeaturesSection(): React.JSX.Element {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <p className="text-[10px] font-bold text-brand-400 uppercase tracking-[0.2em] mb-3">
-            Powerful Features
-          </p>
+        <div className="text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-4"
+            style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)" }}>
+            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#818cf8" }}>
+              Powerful Features
+            </span>
+          </div>
           <h2 id="features-heading" className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
             Everything you need for modern QA.
           </h2>
@@ -143,31 +176,41 @@ export function FeaturesSection(): React.JSX.Element {
           {features.map((f) => (
             <div
               key={f.title}
-              className="group relative rounded-xl p-5 flex flex-col gap-3 transition-all duration-200 hover:-translate-y-0.5"
+              className="group relative rounded-2xl p-5 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-0.5"
               style={{
-                background: "rgba(255,255,255,0.02)",
+                background: "rgba(255,255,255,0.025)",
                 border: "1px solid rgba(255,255,255,0.07)",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.border = `1px solid ${f.iconColor}33`;
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.04)";
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.border = `1px solid ${f.iconGlow.replace("0.35", "0.55")}`;
+                el.style.boxShadow = `0 0 0 1px ${f.iconGlow.replace("0.35", "0.18")}, 0 0 22px ${f.iconGlow.replace("0.35", "0.35")}, 0 0 48px ${f.iconGlow.replace("0.35", "0.14")}`;
+                el.style.background = "rgba(255,255,255,0.04)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.border = "1px solid rgba(255,255,255,0.07)";
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)";
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.border = "1px solid rgba(255,255,255,0.07)";
+                el.style.boxShadow = "none";
+                el.style.background = "rgba(255,255,255,0.025)";
               }}
             >
-              {/* Icon + soon */}
+              {/* Icon row: big icon left, Soon badge top-right (comingSoon only) */}
               <div className="flex items-start justify-between">
+                {/* Large icon square */}
                 <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: f.iconBg }}
+                  className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
+                  style={{
+                    background: f.iconBg,
+                    boxShadow: `0 4px 18px ${f.iconGlow}`,
+                  }}
                 >
                   {f.icon}
                 </div>
+
+                {/* Top-right: Soon badge only when coming soon */}
                 {f.comingSoon && (
                   <span
-                    className="text-[9px] font-semibold px-2 py-0.5 rounded-full"
+                    className="text-[9px] font-semibold px-2 py-0.5 rounded-full mt-0.5"
                     style={{ color: "rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
                   >
                     Soon
@@ -175,19 +218,27 @@ export function FeaturesSection(): React.JSX.Element {
                 )}
               </div>
 
-              <div>
-                <h3 className="text-sm font-semibold text-white mb-1">{f.title}</h3>
+              {/* Text */}
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-white mb-1.5">{f.title}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
                   {f.description}
                 </p>
               </div>
 
-              {/* Arrow link */}
-              <div className="mt-auto flex items-center gap-1 text-[11px]" style={{ color: "rgba(255,255,255,0.25)" }}>
-                <span>Learn more</span>
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                  <path d="M2 5h6M5.5 2.5l2.5 2.5-2.5 2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              {/* Bottom-right circle arrow */}
+              <div className="mt-auto flex justify-end">
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
+                  style={{
+                    background: "rgba(99,102,241,0.15)",
+                    border: "1px solid rgba(99,102,241,0.3)",
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="#818cf8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
           ))}
