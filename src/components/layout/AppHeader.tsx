@@ -1,40 +1,36 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Logo } from "./Logo";
-import { getInitials } from "@/lib/utils";
+import Link from "next/link";
 
 interface AppHeaderProps {
-  /** Callback to toggle the mobile sidebar */
   onMenuToggle: () => void;
-  /** Authenticated user info passed from server component */
   user: { name: string; email: string } | null;
 }
 
-export function AppHeader({ onMenuToggle, user }: AppHeaderProps): React.JSX.Element {
-  const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [loggingOut, setLoggingOut] = useState(false);
+const topicLinks = [
+  { label: "Docs",      href: "/docs"      },
+  { label: "QA Guides", href: "/qa-guides" },
+  { label: "Templates", href: "/templates" },
+  { label: "Changelog", href: "/changelog" },
+] as const;
 
-  async function handleLogout(): Promise<void> {
-    setLoggingOut(true);
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-    } finally {
-      router.push("/login");
-    }
-  }
-
-  const displayName = user?.name || user?.email || "User";
-
+export function AppHeader({
+  onMenuToggle,
+}: AppHeaderProps): React.JSX.Element {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-surface-700 bg-surface-900 px-4">
-      {/* Mobile menu toggle */}
+    <header
+      className="sticky top-0 z-30 flex h-14 items-center px-4 gap-3 shrink-0"
+      style={{
+        background: "rgba(4,5,18,0.95)",
+        backdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
+      {/* Mobile: sidebar hamburger */}
       <button
         type="button"
         onClick={onMenuToggle}
-        className="lg:hidden p-1.5 rounded-md text-content-secondary hover:text-content-primary hover:bg-surface-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+        className="lg:hidden p-1.5 rounded-lg text-content-secondary hover:text-content-primary hover:bg-surface-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 shrink-0"
         aria-label="Open navigation menu"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -44,60 +40,21 @@ export function AppHeader({ onMenuToggle, user }: AppHeaderProps): React.JSX.Ele
         </svg>
       </button>
 
-      <div className="hidden lg:block">
-        <Logo />
-      </div>
-
+      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* User menu */}
-      <div className="relative">
-        <button
-          type="button"
-          onClick={() => setMenuOpen((v) => !v)}
-          className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-900"
-          aria-label={`User menu for ${displayName}`}
-          aria-expanded={menuOpen}
-          aria-haspopup="menu"
-        >
-          <div
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-500 text-white text-sm font-semibold select-none"
-            aria-hidden="true"
+      {/* Topic links */}
+      <nav aria-label="Product navigation" className="flex items-center gap-5 sm:gap-6">
+        {topicLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="text-xs text-content-secondary hover:text-content-primary transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded whitespace-nowrap"
           >
-            {getInitials(displayName)}
-          </div>
-        </button>
-
-        {/* Dropdown */}
-        {menuOpen && (
-          <div
-            className="absolute right-0 mt-2 w-48 rounded-xl border border-surface-700 bg-surface-800 shadow-xl z-50 overflow-hidden"
-            role="menu"
-            aria-label="User menu"
-          >
-            {user && (
-              <div className="px-4 py-3 border-b border-surface-700">
-                <p className="text-xs font-semibold text-content-primary truncate">{user.name || "User"}</p>
-                <p className="text-xs text-content-tertiary truncate">{user.email}</p>
-              </div>
-            )}
-            <button
-              type="button"
-              role="menuitem"
-              disabled={loggingOut}
-              onClick={handleLogout}
-              className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-content-secondary hover:bg-surface-700 hover:text-content-primary transition-colors focus-visible:outline-none focus-visible:bg-surface-700 disabled:opacity-50"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                <polyline points="16 17 21 12 16 7" />
-                <line x1="21" x2="9" y1="12" y2="12" />
-              </svg>
-              {loggingOut ? "Signing out…" : "Sign out"}
-            </button>
-          </div>
-        )}
-      </div>
+            {link.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
