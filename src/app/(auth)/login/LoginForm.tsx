@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Input } from "@/components/ui/Input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
@@ -24,18 +25,14 @@ interface FormErrors {
 type SubmitState = "idle" | "loading" | "success" | "error";
 
 // ---------------------------------------------------------------------------
-// Validation — delegated to shared lib
-// ---------------------------------------------------------------------------
-
-function validate(values: FormValues): FormErrors {
-  return validateLoginForm(values);
-}
-
-// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
 export function LoginForm(): React.JSX.Element {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get("next") ?? "/dashboard";
+
   const [values, setValues] = useState<FormValues>({ email: "", password: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
@@ -53,7 +50,7 @@ export function LoginForm(): React.JSX.Element {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    const validationErrors = validate(values);
+    const validationErrors = validateLoginForm(values);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -62,50 +59,36 @@ export function LoginForm(): React.JSX.Element {
     setSubmitState("loading");
     setServerError(null);
 
-    // V0.1: UI placeholder — real authentication implemented in V0.2.
-    // Returns a safe "invalid credentials" message regardless of input
-    // to avoid account enumeration.
-    await new Promise<void>((resolve) => setTimeout(resolve, 800));
-    setSubmitState("success");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json() as { success: boolean; error?: string };
+
+      if (!res.ok || !data.success) {
+        setServerError(data.error ?? "Invalid email or password.");
+        setSubmitState("error");
+        return;
+      }
+
+      setSubmitState("success");
+      // Redirect to intended destination or dashboard
+      const safe = nextPath.startsWith("/") ? nextPath : "/dashboard";
+      router.push(safe);
+    } catch {
+      setServerError("A network error occurred. Please try again.");
+      setSubmitState("error");
+    }
   }
 
   const isLoading = submitState === "loading";
 
-  // ── Success state ──
-  if (submitState === "success") {
-    return (
-      <div
-        className="rounded-lg p-5 text-center"
-        role="status"
-        aria-live="polite"
-        style={{
-          background: "rgba(34,197,94,0.08)",
-          border: "1px solid rgba(34,197,94,0.25)",
-        }}
-      >
-        <div className="flex justify-center mb-3">
-          <div
-            className="w-10 h-10 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(34,197,94,0.15)" }}
-            aria-hidden="true"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10l4 4 8-8" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <p className="text-sm font-semibold text-white mb-1">Sign in successful!</p>
-        <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-          Full session management is coming in V0.2.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
 
-      {/* Server error banner */}
       {serverError && (
         <div
           className="rounded-lg px-4 py-3 text-sm"
