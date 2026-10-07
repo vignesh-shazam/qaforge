@@ -3,6 +3,9 @@
  * Validates a reset token and updates the user's password.
  */
 
+// Force dynamic rendering — prevents static evaluation at build time.
+export const dynamic = "force-dynamic";
+
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { hashToken } from "@/lib/auth/token";

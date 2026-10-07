@@ -3,6 +3,9 @@
  * Destroys the current session and clears the session cookie.
  */
 
+// Force dynamic rendering — prevents static evaluation at build time.
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { destroySession } from "@/lib/auth/session";
 

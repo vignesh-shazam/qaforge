@@ -3,6 +3,9 @@
  * Authenticates a user and creates a session.
  */
 
+// Force dynamic rendering — prevents static evaluation at build time.
+export const dynamic = "force-dynamic";
+
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { normalizeEmail } from "@/lib/auth/email";

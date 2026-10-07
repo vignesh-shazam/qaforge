@@ -11,6 +11,10 @@ import { generateResetToken } from "@/lib/auth/token";
 import { findUserByEmail, setResetToken } from "@/lib/auth/user-repository";
 import { checkForgotPasswordRateLimit } from "@/lib/auth/rate-limit";
 
+// Force dynamic rendering — prevents static evaluation at build time.
+// Required because this route uses Prisma (database) and request headers.
+export const dynamic = "force-dynamic";
+
 // Generic message regardless of account existence
 const GENERIC_RESPONSE = "If an account exists for this email, we'll send you a password reset link.";
 
