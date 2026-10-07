@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { Button } from "@/components/ui/Button";
-import {
-  validateRegisterForm,
-} from "@/lib/auth-validation";
+import { validateRegisterForm } from "@/lib/auth-validation";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -29,18 +28,12 @@ interface FormErrors {
 type SubmitState = "idle" | "loading" | "success" | "error";
 
 // ---------------------------------------------------------------------------
-// Validation — delegated to shared lib
-// ---------------------------------------------------------------------------
-
-function validate(values: FormValues): FormErrors {
-  return validateRegisterForm(values);
-}
-
-// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
 export function RegisterForm(): React.JSX.Element {
+  const router = useRouter();
+
   const [values, setValues] = useState<FormValues>({
     name: "",
     email: "",
@@ -54,7 +47,6 @@ export function RegisterForm(): React.JSX.Element {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
-    // Clear field error on change
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -64,7 +56,7 @@ export function RegisterForm(): React.JSX.Element {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    const validationErrors = validate(values);
+    const validationErrors = validateRegisterForm(values);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -73,50 +65,41 @@ export function RegisterForm(): React.JSX.Element {
     setSubmitState("loading");
     setServerError(null);
 
-    // V0.1: UI placeholder — real registration implemented in V0.2.
-    // The submission boundary is isolated here for clean V0.2 backend integration.
-    await new Promise<void>((resolve) => setTimeout(resolve, 800));
-    setSubmitState("success");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json() as {
+        success: boolean;
+        error?: string;
+        fields?: FormErrors;
+      };
+
+      if (!res.ok || !data.success) {
+        if (data.fields) setErrors(data.fields);
+        setServerError(
+          data.error ?? "Unable to create your account. Please try again.",
+        );
+        setSubmitState("error");
+        return;
+      }
+
+      setSubmitState("success");
+      router.push("/dashboard");
+    } catch {
+      setServerError("A network error occurred. Please try again.");
+      setSubmitState("error");
+    }
   }
 
   const isLoading = submitState === "loading";
 
-  // ── Success state ──
-  if (submitState === "success") {
-    return (
-      <div
-        className="rounded-lg p-5 text-center"
-        role="status"
-        aria-live="polite"
-        style={{
-          background: "rgba(34,197,94,0.08)",
-          border: "1px solid rgba(34,197,94,0.25)",
-        }}
-      >
-        {/* Checkmark icon */}
-        <div className="flex justify-center mb-3">
-          <div
-            className="w-10 h-10 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(34,197,94,0.15)" }}
-            aria-hidden="true"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M4 10l4 4 8-8" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </div>
-        <p className="text-sm font-semibold text-white mb-1">Account created!</p>
-        <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-          Full authentication is coming in V0.2. Your account is ready.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
 
-      {/* Server error banner */}
       {serverError && (
         <div
           className="rounded-lg px-4 py-3 text-sm"

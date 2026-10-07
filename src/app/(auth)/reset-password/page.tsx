@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { LoginForm } from "./LoginForm";
+import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Sign In | QAForge",
-  description: "Sign in to your QAForge account.",
+  title: "Reset Password | QAForge",
+  description: "Set a new password for your QAForge account.",
   robots: { index: false, follow: false },
 };
 
-export default function LoginPage(): React.JSX.Element {
+export default function ResetPasswordPage(): React.JSX.Element {
   return (
     <div className="flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight" style={{ color: "rgba(255,255,255,0.95)" }}>
-          Welcome back
+          Set a new password
         </h1>
         <p className="mt-2 text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
-          Sign in to continue to QAForge.
+          Choose a strong password for your account.
         </p>
       </div>
 
@@ -30,19 +30,18 @@ export default function LoginPage(): React.JSX.Element {
           backdropFilter: "blur(16px)",
         }}
       >
-        {/* Suspense required for useSearchParams in LoginForm */}
+        {/* Suspense required for useSearchParams */}
         <Suspense fallback={<div className="text-sm text-center" style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</div>}>
-          <LoginForm />
+          <ResetPasswordForm />
         </Suspense>
       </div>
 
       <p className="text-center text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
-        Don&apos;t have an account?{" "}
         <Link
-          href="/register"
+          href="/login"
           className="font-medium text-brand-400 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded"
         >
-          Sign up
+          ← Back to Sign In
         </Link>
       </p>
     </div>

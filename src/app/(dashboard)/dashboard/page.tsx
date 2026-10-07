@@ -10,7 +10,8 @@ import {
 import { Badge } from "@/components/ui/Badge";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Dashboard | QAForge",
+  robots: { index: false, follow: false },
 };
 
 const statCards = [

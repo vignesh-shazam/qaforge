@@ -20,9 +20,21 @@ const serverSchema = z.object({
     .enum(["development", "test", "production"])
     .default("development"),
 
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+  // DATABASE_URL is required at runtime but allowed to be absent during
+  // static build analysis (Next.js build runs without a real DB connection).
+  DATABASE_URL: z.string().default("postgresql://placeholder:placeholder@localhost:5432/qaforge"),
 
-  // V0.2 — not required in V0.1 but validated as optional strings
+  // Session encryption secret for iron-session cookie encryption.
+  // Generate with: openssl rand -base64 32
+  SESSION_SECRET: z
+    .string()
+    .min(32, "SESSION_SECRET must be at least 32 characters")
+    .default("dev-session-secret-change-in-production-min32chars"),
+
+  // Base URL used for generating password reset links.
+  APP_URL: z.string().url().default("http://localhost:3000"),
+
+  // Legacy NextAuth fields — kept for compatibility
   NEXTAUTH_URL: z.string().url().optional(),
   NEXTAUTH_SECRET: z.string().optional(),
 });

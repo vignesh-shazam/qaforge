@@ -18,15 +18,18 @@ datasource db {
 // ---------------------------------------------------------------------------
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String?
-  /// Stores a bcrypt/argon2 hash — never the plain-text password.
-  /// Populated in V0.2 when real authentication is implemented.
-  passwordHash String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  projects     Project[]
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  name                 String?
+  /// Stores a bcrypt hash — never the plain-text password.
+  passwordHash         String
+  /// SHA-256 hash of the one-time password reset token. Never store the raw token.
+  resetTokenHash       String?
+  /// When the reset token expires (15 minutes from issue).
+  resetTokenExpiresAt  DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  projects             Project[]
 
   @@map("users")
 }
