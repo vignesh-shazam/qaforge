@@ -1,3 +1,5 @@
+"use client";
+
 const useCases = [
   {
     iconBg: "rgba(99,102,241,0.15)",
@@ -69,9 +71,12 @@ export function UseCasesSection(): React.JSX.Element {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-[10px] font-bold text-brand-400 uppercase tracking-[0.2em] mb-3">
-            Use Cases
-          </p>
+          <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-4"
+            style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)" }}>
+            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#818cf8" }}>
+              Built For Every QA Scenario
+            </span>
+          </div>
           <h2 id="usecases-heading" className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
             Works across industries and use cases.
           </h2>
@@ -81,10 +86,22 @@ export function UseCasesSection(): React.JSX.Element {
           {useCases.map((uc) => (
             <div
               key={uc.title}
-              className="flex flex-col gap-4 rounded-xl p-6 transition-all duration-200"
+              className="flex flex-col gap-4 rounded-xl p-6 transition-all duration-300"
               style={{
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.07)",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.border = "1px solid rgba(99,102,241,0.55)";
+                el.style.boxShadow = "0 0 0 1px rgba(99,102,241,0.18), 0 0 22px rgba(99,102,241,0.35), 0 0 48px rgba(99,102,241,0.14)";
+                el.style.background = "rgba(99,102,241,0.04)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.border = "1px solid rgba(255,255,255,0.07)";
+                el.style.boxShadow = "none";
+                el.style.background = "rgba(255,255,255,0.02)";
               }}
             >
               <div

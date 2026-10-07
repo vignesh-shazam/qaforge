@@ -7,11 +7,10 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
 const navLinks = [
-  { label: "Product",  href: "#features" },
   { label: "Features", href: "#features" },
-  { label: "Plans",  href: "#Plans"  },
-  { label: "Docs",     href: "#Docs"         },
-  { label: "About",    href: "#About"         },
+  { label: "Pricing",  href: "#pricing"  },
+  { label: "How It Works", href: "#" },
+  { label: "Docs",     href: "#"         },
 ] as const;
 
 export function MarketingHeader(): React.JSX.Element {
@@ -42,10 +41,10 @@ export function MarketingHeader(): React.JSX.Element {
                     className="px-3.5 py-2 text-sm rounded-lg transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
                     style={{ color: "rgba(255,255,255,0.55)" }}
                     onMouseEnter={(e) =>
-                      ((e.target as HTMLAnchorElement).style.color = "rgba(255,255,255,0.9)")
+                      ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.9)")
                     }
                     onMouseLeave={(e) =>
-                      ((e.target as HTMLAnchorElement).style.color = "rgba(255,255,255,0.55)")
+                      ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.55)")
                     }
                   >
                     {link.label}

@@ -3,19 +3,14 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { validateForgotPasswordForm } from "@/lib/auth-validation";
 
-interface FormState {
-  email: string;
-}
-
-interface FormErrors {
-  email?: string;
-}
-
+interface FormValues { email: string; }
+interface FormErrors { email?: string; }
 type SubmitState = "idle" | "loading" | "submitted";
 
 export function ForgotPasswordForm(): React.JSX.Element {
-  const [values, setValues] = useState<FormState>({ email: "" });
+  const [values, setValues] = useState<FormValues>({ email: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
@@ -27,38 +22,52 @@ export function ForgotPasswordForm(): React.JSX.Element {
     }
   }
 
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    if (!values.email.trim()) {
-      setErrors({ email: "Email is required." });
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-      setErrors({ email: "Please enter a valid email address." });
+    const validationErrors = validateForgotPasswordForm(values);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     setSubmitState("loading");
 
-    // V0.1: Placeholder — real password reset implemented in V0.2
-    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+    try {
+      await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+    } catch {
+      // Intentionally swallowed — always show generic success
+    }
+
+    // Always show generic response regardless of API result
     setSubmitState("submitted");
   }
+
+  const isLoading = submitState === "loading";
 
   if (submitState === "submitted") {
     return (
       <div
-        className="rounded-lg border border-success-900 bg-success-900/20 p-4 text-center"
+        className="rounded-lg p-5 text-center"
         role="status"
+        aria-live="polite"
+        style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)" }}
       >
-        <p className="text-sm font-medium text-success-400">Check your inbox</p>
-        <p className="text-xs text-content-secondary mt-1">
-          If an account exists for{" "}
-          <span className="text-content-primary">{values.email}</span>, a reset
-          link will be sent. (V0.2 feature)
+        <div className="flex justify-center mb-3">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(34,197,94,0.15)" }} aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M3 10l3 3 7-7" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <p className="text-sm font-semibold text-white mb-1">Check your inbox</p>
+        <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
+          If an account exists for that email address, we&apos;ll send a
+          password reset link shortly.
         </p>
       </div>
     );
@@ -67,7 +76,7 @@ export function ForgotPasswordForm(): React.JSX.Element {
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
       <Input
-        label="Email"
+        label="Email address"
         id="email"
         name="email"
         type="email"
@@ -76,19 +85,11 @@ export function ForgotPasswordForm(): React.JSX.Element {
         value={values.email}
         onChange={handleChange}
         error={errors.email}
-        disabled={submitState === "loading"}
-        helperText="We'll send a password reset link to this address."
+        disabled={isLoading}
         required
       />
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        loading={submitState === "loading"}
-        className="w-full mt-2"
-      >
-        Send reset link
+      <Button type="submit" variant="primary" size="lg" loading={isLoading} className="w-full mt-1">
+        {isLoading ? "Sending reset link…" : "Send Reset Link"}
       </Button>
     </form>
   );

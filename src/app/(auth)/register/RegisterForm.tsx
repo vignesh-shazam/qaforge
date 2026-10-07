@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { Button } from "@/components/ui/Button";
+import { validateRegisterForm } from "@/lib/auth-validation";
 
-interface FormState {
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+interface FormValues {
   name: string;
   email: string;
   password: string;
@@ -20,38 +27,14 @@ interface FormErrors {
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
-function validateForm(values: FormState): FormErrors {
-  const errors: FormErrors = {};
-
-  if (!values.name.trim()) {
-    errors.name = "Name is required.";
-  } else if (values.name.trim().length < 2) {
-    errors.name = "Name must be at least 2 characters.";
-  }
-
-  if (!values.email.trim()) {
-    errors.email = "Email is required.";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = "Please enter a valid email address.";
-  }
-
-  if (!values.password) {
-    errors.password = "Password is required.";
-  } else if (values.password.length < 8) {
-    errors.password = "Password must be at least 8 characters.";
-  }
-
-  if (!values.confirmPassword) {
-    errors.confirmPassword = "Please confirm your password.";
-  } else if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = "Passwords do not match.";
-  }
-
-  return errors;
-}
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
 
 export function RegisterForm(): React.JSX.Element {
-  const [values, setValues] = useState<FormState>({
+  const router = useRouter();
+
+  const [values, setValues] = useState<FormValues>({
     name: "",
     email: "",
     password: "",
@@ -59,6 +42,7 @@ export function RegisterForm(): React.JSX.Element {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [serverError, setServerError] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
@@ -66,45 +50,71 @@ export function RegisterForm(): React.JSX.Element {
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+    if (serverError) setServerError(null);
   }
 
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    const validationErrors = validateForm(values);
+    const validationErrors = validateRegisterForm(values);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
     setSubmitState("loading");
+    setServerError(null);
 
-    // V0.1: Placeholder — real registration implemented in V0.2
-    await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-    setSubmitState("success");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json() as {
+        success: boolean;
+        error?: string;
+        fields?: FormErrors;
+      };
+
+      if (!res.ok || !data.success) {
+        if (data.fields) setErrors(data.fields);
+        setServerError(
+          data.error ?? "Unable to create your account. Please try again.",
+        );
+        setSubmitState("error");
+        return;
+      }
+
+      setSubmitState("success");
+      router.push("/dashboard");
+    } catch {
+      setServerError("A network error occurred. Please try again.");
+      setSubmitState("error");
+    }
   }
 
-  if (submitState === "success") {
-    return (
-      <div
-        className="rounded-lg border border-success-900 bg-success-900/20 p-4 text-center"
-        role="status"
-      >
-        <p className="text-sm font-medium text-success-400">
-          Registration coming in V0.2
-        </p>
-        <p className="text-xs text-content-secondary mt-1">
-          This is a UI placeholder. Real account creation will be implemented
-          next.
-        </p>
-      </div>
-    );
-  }
+  const isLoading = submitState === "loading";
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+
+      {serverError && (
+        <div
+          className="rounded-lg px-4 py-3 text-sm"
+          role="alert"
+          aria-live="assertive"
+          style={{
+            background: "rgba(239,68,68,0.1)",
+            border: "1px solid rgba(239,68,68,0.3)",
+            color: "#fca5a5",
+          }}
+        >
+          {serverError}
+        </div>
+      )}
+
       <Input
         label="Full name"
         id="name"
@@ -115,7 +125,7 @@ export function RegisterForm(): React.JSX.Element {
         value={values.name}
         onChange={handleChange}
         error={errors.name}
-        disabled={submitState === "loading"}
+        disabled={isLoading}
         required
       />
 
@@ -129,35 +139,34 @@ export function RegisterForm(): React.JSX.Element {
         value={values.email}
         onChange={handleChange}
         error={errors.email}
-        disabled={submitState === "loading"}
+        disabled={isLoading}
         required
       />
 
-      <Input
+      <PasswordInput
         label="Password"
         id="password"
         name="password"
-        type="password"
         autoComplete="new-password"
-        placeholder="Minimum 8 characters"
+        placeholder="Min. 8 characters"
         value={values.password}
         onChange={handleChange}
         error={errors.password}
-        disabled={submitState === "loading"}
+        helperText={!errors.password ? "Use letters and numbers." : undefined}
+        disabled={isLoading}
         required
       />
 
-      <Input
+      <PasswordInput
         label="Confirm password"
         id="confirmPassword"
         name="confirmPassword"
-        type="password"
         autoComplete="new-password"
-        placeholder="••••••••"
+        placeholder="Repeat your password"
         value={values.confirmPassword}
         onChange={handleChange}
         error={errors.confirmPassword}
-        disabled={submitState === "loading"}
+        disabled={isLoading}
         required
       />
 
@@ -165,10 +174,10 @@ export function RegisterForm(): React.JSX.Element {
         type="submit"
         variant="primary"
         size="lg"
-        loading={submitState === "loading"}
-        className="w-full mt-2"
+        loading={isLoading}
+        className="w-full mt-1"
       >
-        Create account
+        {isLoading ? "Creating account…" : "Create Account"}
       </Button>
     </form>
   );
