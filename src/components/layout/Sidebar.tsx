@@ -10,15 +10,13 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { SidebarAccount } from "./SidebarAccount";
 import { IconProjects } from "../icons/IconProjects";
-import { IconTestCases } from "../icons";
+import { IconNotifications, IconTestCases } from "../icons";
 import { IconBugReports } from "../icons/IconBugReports";
 import { IconTestData } from "../icons/IconTestData";
 import { IconApiTests } from "../icons/IconApiTests";
 import { IconAutomation } from "../icons/IconAutomation";
 import { IconReports } from "../icons/IconReports";
 import { IconHome } from "../icons/IconHome";
-import { IconSettings } from "../icons/IconSettings";
-import { IconHelpSupport } from "../icons/IconHelpSupport";
 
 interface NavItem {
   label: string;
@@ -28,21 +26,17 @@ interface NavItem {
 }
 
 const primaryNav: NavItem[] = [
-  { label: "Home",          href: "/home",          icon: <IconHome size={18} aria-hidden="true" />,         comingSoon: true },
-  { label: "Dashboard",     href: "/dashboard",     icon: <IconDashboard size={18} aria-hidden="true" /> },
-  { label: "Projects",      href: "/projects",      icon: <IconProjects size={18} aria-hidden="true" /> },
-  { label: "Test Cases",    href: "/test-cases",    icon: <IconTestCases size={18} aria-hidden="true" />,    comingSoon: true },
-  { label: "Bug Reports",   href: "/bug-reports",   icon: <IconBugReports size={18} aria-hidden="true" />,  comingSoon: true },
-  { label: "Test Data",     href: "/test-data",     icon: <IconTestData size={18} aria-hidden="true" />,    comingSoon: true },
-  { label: "API Tests",     href: "/api-tests",     icon: <IconApiTests size={18} aria-hidden="true" />,    comingSoon: true },
-  { label: "Automation",    href: "/automation",    icon: <IconAutomation size={18} aria-hidden="true" />,  comingSoon: true },
-  { label: "Reports",       href: "/reports",       icon: <IconReports size={18} aria-hidden="true" />,     comingSoon: true },
+  { label: "Home", href: "/home", icon: <IconHome size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Dashboard", href: "/dashboard", icon: <IconDashboard size={18} aria-hidden="true" /> },
+  { label: "Projects", href: "/projects", icon: <IconProjects size={18} aria-hidden="true" /> },
+  { label: "Test Cases", href: "/test-cases", icon: <IconTestCases size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Bug Reports", href: "/bug-reports", icon: <IconBugReports size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Test Data", href: "/test-data", icon: <IconTestData size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "API Tests", href: "/api-tests", icon: <IconApiTests size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Automation", href: "/automation", icon: <IconAutomation size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Reports", href: "/reports", icon: <IconReports size={18} aria-hidden="true" />, comingSoon: true },
   { label: "Subscriptions", href: "/subscriptions", icon: <IconSubscription size={18} aria-hidden="true" />, comingSoon: true },
-];
-
-const secondaryNav: NavItem[] = [
-  { label: "Settings",     href: "/settings", icon: <IconSettings size={18} aria-hidden="true" />,    comingSoon: true },
-  { label: "Help & Support", href: "/help",   icon: <IconHelpSupport size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Notifications", href: "/notifications", icon: <IconNotifications size={18} aria-hidden="true" />, comingSoon: true },
 ];
 
 interface NavLinkProps {
@@ -165,16 +159,6 @@ export function Sidebar({ mobileOpen, onClose, user }: SidebarProps): React.JSX.
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <ul className="flex flex-col gap-0.5 list-none">
           {primaryNav.map((item) => (
-            <li key={item.href}>
-              <NavLink item={item} isActive={isActive(item.href)} expanded={isMobile || expanded} onClick={onClose} />
-            </li>
-          ))}
-        </ul>
-
-        <div className="my-2 mx-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} aria-hidden="true" />
-
-        <ul className="flex flex-col gap-0.5 list-none">
-          {secondaryNav.map((item) => (
             <li key={item.href}>
               <NavLink item={item} isActive={isActive(item.href)} expanded={isMobile || expanded} onClick={onClose} />
             </li>
