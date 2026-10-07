@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { AppHeader } from "./AppHeader";
@@ -17,10 +17,8 @@ export function DashboardLayout({ children, user }: DashboardLayoutProps): React
       className="flex h-screen overflow-hidden"
       style={{ background: "#030712" }}
     >
-      {/* Sidebar */}
-      <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} user={user} />
 
-      {/* Main column */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <AppHeader onMenuToggle={() => setSidebarOpen(true)} user={user} />
         <main
