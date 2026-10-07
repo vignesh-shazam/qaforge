@@ -1,13 +1,14 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IconSubscription } from "@/components/icons/IconSubscription";
 import { IconDashboard } from "@/components/icons/IconDashboard";
-import { ChevronRight, } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
+import { SidebarAccount } from "./SidebarAccount";
 import { IconProjects } from "../icons/IconProjects";
 import { IconNotifications, IconTestCases } from "../icons";
 import { IconBugReports } from "../icons/IconBugReports";
@@ -16,12 +17,6 @@ import { IconApiTests } from "../icons/IconApiTests";
 import { IconAutomation } from "../icons/IconAutomation";
 import { IconReports } from "../icons/IconReports";
 import { IconHome } from "../icons/IconHome";
-import { IconSettings } from "../icons/IconSettings";
-import { IconHelpSupport } from "../icons/IconHelpSupport";
-
-// ---------------------------------------------------------------------------
-// Nav items
-// ---------------------------------------------------------------------------
 
 interface NavItem {
   label: string;
@@ -44,15 +39,6 @@ const primaryNav: NavItem[] = [
   { label: "Notifications", href: "/notifications", icon: <IconNotifications size={18} aria-hidden="true" />, comingSoon: true },
 ];
 
-const secondaryNav: NavItem[] = [
-  { label: "Settings", href: "/settings", icon: <IconSettings size={18} aria-hidden="true" />, comingSoon: true },
-  { label: "Help & Support", href: "/help", icon: <IconHelpSupport size={18} aria-hidden="true" />, comingSoon: true },
-];
-
-// ---------------------------------------------------------------------------
-// NavLink
-// ---------------------------------------------------------------------------
-
 interface NavLinkProps {
   item: NavItem;
   isActive: boolean;
@@ -65,11 +51,7 @@ function NavLink({ item, isActive, expanded, onClick }: NavLinkProps): React.JSX
     <span
       className={cn(
         "shrink-0 flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-150",
-        isActive
-          ? "text-white"
-          : item.comingSoon
-            ? "text-content-disabled"
-            : "text-content-tertiary group-hover:text-content-secondary",
+        isActive ? "text-white" : item.comingSoon ? "text-content-disabled" : "text-content-tertiary group-hover:text-content-secondary",
       )}
       style={isActive ? { background: "rgba(99,102,241,0.35)" } : undefined}
     >
@@ -83,7 +65,6 @@ function NavLink({ item, isActive, expanded, onClick }: NavLinkProps): React.JSX
         "flex-1 text-sm font-medium truncate transition-all duration-150",
         isActive ? "text-white" : item.comingSoon ? "text-content-disabled" : "text-content-secondary group-hover:text-content-primary",
       )}
-      style={{ opacity: expanded ? 1 : 0 }}
     >
       {item.label}
     </span>
@@ -106,11 +87,7 @@ function NavLink({ item, isActive, expanded, onClick }: NavLinkProps): React.JSX
 
   if (item.comingSoon) {
     return (
-      <span
-        className={base}
-        aria-label={`${item.label} — coming soon`}
-        title={`${item.label} — coming soon`}
-      >
+      <span className={base} aria-label={`${item.label} - coming soon`} title={`${item.label} - coming soon`}>
         {iconEl}{labelEl}{soonBadge}
       </span>
     );
@@ -137,29 +114,21 @@ function NavLink({ item, isActive, expanded, onClick }: NavLinkProps): React.JSX
   );
 }
 
-// ---------------------------------------------------------------------------
-// Sidebar
-// ---------------------------------------------------------------------------
-
 interface SidebarProps {
   mobileOpen: boolean;
   onClose: () => void;
+  user: { name: string; email: string } | null;
 }
 
-export function Sidebar({ mobileOpen, onClose }: SidebarProps): React.JSX.Element {
+export function Sidebar({ mobileOpen, onClose, user }: SidebarProps): React.JSX.Element {
   const pathname = usePathname();
   const [hovered, setHovered] = useState(false);
-
-  // Desktop: collapsed (icon-only) by default, expands on hover
   const expanded = hovered;
 
   function isActive(href: string): boolean {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  // ---------------------------------------------------------------------------
-  // Shared nav content (used in both desktop + mobile)
-  // ---------------------------------------------------------------------------
   const navContent = (isMobile: boolean): React.JSX.Element => (
     <nav
       className="flex flex-col h-full"
@@ -171,11 +140,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps): React.JSX.Elemen
         className="flex items-center justify-between shrink-0 px-3 py-3"
         style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        {/* Always show something — icon-only when collapsed, full logo when expanded */}
-        {isMobile || expanded
-          ? <Logo />
-          : <Logo variant="icon" />
-        }
+        {isMobile || expanded ? <Logo /> : <Logo variant="icon" />}
         {isMobile && (
           <button
             type="button"
@@ -191,7 +156,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps): React.JSX.Elemen
       </div>
 
       {/* Nav scroll area */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <ul className="flex flex-col gap-0.5 list-none">
           {primaryNav.map((item) => (
             <li key={item.href}>
@@ -199,23 +164,21 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps): React.JSX.Elemen
             </li>
           ))}
         </ul>
-
-        <div className="my-2 mx-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} aria-hidden="true" />
-
-        <ul className="flex flex-col gap-0.5 list-none">
-          {secondaryNav.map((item) => (
-            <li key={item.href}>
-              <NavLink item={item} isActive={isActive(item.href)} expanded={isMobile || expanded} onClick={onClose} />
-            </li>
-          ))}
-        </ul>
       </div>
+
+      {/* Account section — pinned to bottom */}
+      <SidebarAccount
+        user={user}
+        expanded={isMobile || expanded}
+        isMobile={isMobile}
+        onClose={onClose}
+      />
     </nav>
   );
 
   return (
     <>
-      {/* Desktop sidebar — collapsed by default, expands on hover */}
+      {/* Desktop sidebar */}
       <aside
         className="hidden lg:flex lg:flex-col lg:shrink-0 transition-all duration-200"
         style={{
