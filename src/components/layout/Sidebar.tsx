@@ -26,7 +26,7 @@ interface NavItem {
 }
 
 const primaryNav: NavItem[] = [
-  { label: "Home", href: "/home", icon: <IconHome size={18} aria-hidden="true" />, comingSoon: true },
+  { label: "Home", href: "/home", icon: <IconHome size={18} aria-hidden="true" /> },
   { label: "Dashboard", href: "/dashboard", icon: <IconDashboard size={18} aria-hidden="true" /> },
   { label: "Projects", href: "/projects", icon: <IconProjects size={18} aria-hidden="true" /> },
   { label: "Test Cases", href: "/test-cases", icon: <IconTestCases size={18} aria-hidden="true" />, comingSoon: true },

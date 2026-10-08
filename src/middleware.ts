@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Next.js Middleware — Route Protection
  *
  * Runs on every request matched by config.matcher.
@@ -18,7 +18,7 @@ import type { SessionData } from "@/lib/auth/session";
 // Protected route prefixes
 // ---------------------------------------------------------------------------
 
-const PROTECTED_PREFIXES = ["/dashboard", "/projects"];
+const PROTECTED_PREFIXES = ["/dashboard", "/projects", "/home"];
 
 // ---------------------------------------------------------------------------
 // Session options — must stay in sync with src/lib/auth/session.ts.
@@ -79,5 +79,5 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 // ---------------------------------------------------------------------------
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/projects/:path*"],
+  matcher: ["/dashboard/:path*", "/projects/:path*", "/home/:path*"],
 };
