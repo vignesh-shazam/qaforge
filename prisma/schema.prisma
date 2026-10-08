@@ -1,8 +1,5 @@
-// QAForge — Prisma Schema
+// QAForge Prisma Schema
 // V0.1 Foundation: User and Project models
-//
-// Run `npm run prisma:generate` after schema changes.
-// Run `npm run prisma:migrate` to apply to a local database.
 
 generator client {
   provider = "prisma-client-js"
@@ -13,42 +10,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ---------------------------------------------------------------------------
-// User
-// ---------------------------------------------------------------------------
-
 model User {
-  id                   String    @id @default(cuid())
-  email                String    @unique
-  name                 String?
-  /// Stores a bcrypt hash — never the plain-text password.
-  passwordHash         String
-  /// SHA-256 hash of the one-time password reset token. Never store the raw token.
-  resetTokenHash       String?
-  /// When the reset token expires (15 minutes from issue).
-  resetTokenExpiresAt  DateTime?
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
-  projects             Project[]
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  name                String?
+  passwordHash        String
+  resetTokenHash      String?
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  projects            Project[]
 
   @@map("users")
 }
 
-// ---------------------------------------------------------------------------
-// Project
-// ---------------------------------------------------------------------------
+enum ProjectStatus {
+  Active
+  Draft
+  Archived
+
+  @@map("project_status")
+}
 
 model Project {
-  id          String   @id @default(cuid())
+  id          String        @id @default(cuid())
   name        String
   description String?
-  /// The base URL of the application under test.
-  /// Optional in V0.1 — required for URL discovery in V0.4.
   targetUrl   String?
+  status      ProjectStatus @default(Active)
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([userId])
   @@map("projects")
