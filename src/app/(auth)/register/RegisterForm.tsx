@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -88,7 +88,7 @@ export function RegisterForm(): React.JSX.Element {
       }
 
       setSubmitState("success");
-      router.push("/dashboard");
+      router.push("/home");
     } catch {
       setServerError("A network error occurred. Please try again.");
       setSubmitState("error");
