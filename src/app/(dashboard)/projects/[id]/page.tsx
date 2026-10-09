@@ -22,7 +22,7 @@ export default async function ProjectPage({ params }: ProjectPageProps): Promise
 
   const raw = await db.project.findUnique({
     where: { id },
-    select: { id: true, name: true, description: true, targetUrl: true, status: true, thumbnail: true, userId: true, createdAt: true, updatedAt: true },
+    select: { id: true, name: true, description: true, targetUrl: true, status: true, userId: true, createdAt: true, updatedAt: true },
   });
 
   if (!raw || raw.userId !== user.userId) notFound();
@@ -33,7 +33,7 @@ export default async function ProjectPage({ params }: ProjectPageProps): Promise
     description: raw.description,
     targetUrl: raw.targetUrl,
     status: raw.status as Project["status"],
-    thumbnail: raw.thumbnail ?? null,
+    thumbnail: null, // column pending migration
     createdAt: raw.createdAt.toISOString(),
     updatedAt: raw.updatedAt.toISOString(),
   };

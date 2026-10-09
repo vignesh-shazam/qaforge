@@ -28,7 +28,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       where: { userId: user.userId },
       orderBy: { updatedAt: "desc" },
       take: 3,
-      select: { id: true, name: true, description: true, targetUrl: true, status: true, thumbnail: true, createdAt: true, updatedAt: true },
+      select: { id: true, name: true, description: true, targetUrl: true, status: true, createdAt: true, updatedAt: true },
     });
     recentProjects = raw.map(p => ({
       id: p.id,
@@ -36,7 +36,7 @@ export default async function HomePage(): Promise<React.JSX.Element> {
       description: p.description,
       targetUrl: p.targetUrl,
       status: p.status as Project["status"],
-      thumbnail: p.thumbnail,
+      thumbnail: null, // column pending migration
       createdAt: p.createdAt.toISOString(),
       updatedAt: p.updatedAt.toISOString(),
     }));
