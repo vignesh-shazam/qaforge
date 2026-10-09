@@ -12,34 +12,31 @@ import { HomeRecentProjects } from "@/components/home/HomeRecentProjects";
 
 export const metadata: Metadata = {
   title: "Home | QAForge",
-  description: "Your AI-powered QA engineering platform. Analyze applications, generate test cases, find bugs, and build automation.",
+  description: "Your AI-powered QA engineering platform.",
   robots: { index: false, follow: false },
-  openGraph: {
-    title: "Home | QAForge",
-    description: "Your AI-powered QA engineering platform.",
-    siteName: "QAForge",
-  },
+  openGraph: { title: "Home | QAForge", description: "Your AI-powered QA engineering platform.", siteName: "QAForge" },
 };
 
 export default async function HomePage(): Promise<React.JSX.Element> {
   const user = await getCurrentUser();
   const userName = user?.name || user?.email || "";
-  const firstName = userName.includes(" ")
-    ? (userName.split(" ")[0] ?? "")
-    : userName.split("@")[0] ?? "";
+  const firstName = userName.includes(" ") ? (userName.split(" ")[0] ?? "") : userName.split("@")[0] ?? "";
 
-  // Fetch real recent projects
   let recentProjects: Project[] = [];
   if (user?.userId) {
     const raw = await db.project.findMany({
       where: { userId: user.userId },
       orderBy: { updatedAt: "desc" },
       take: 3,
-      select: { id: true, name: true, description: true, targetUrl: true, status: true, createdAt: true, updatedAt: true },
+      select: { id: true, name: true, description: true, targetUrl: true, status: true, thumbnail: true, createdAt: true, updatedAt: true },
     });
     recentProjects = raw.map(p => ({
-      ...p,
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      targetUrl: p.targetUrl,
       status: p.status as Project["status"],
+      thumbnail: p.thumbnail,
       createdAt: p.createdAt.toISOString(),
       updatedAt: p.updatedAt.toISOString(),
     }));

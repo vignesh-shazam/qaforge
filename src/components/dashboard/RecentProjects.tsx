@@ -20,6 +20,8 @@ function StatusBadge({ status }: { status: ProjectStatus }): React.JSX.Element {
     Active:   { color: "#4ade80", bg: "rgba(74,222,128,0.1)",  border: "rgba(74,222,128,0.25)"  },
     Draft:    { color: "#fbbf24", bg: "rgba(251,191,36,0.1)", border: "rgba(251,191,36,0.25)" },
     Archived: { color: "#94a3b8", bg: "rgba(148,163,184,0.1)", border: "rgba(148,163,184,0.25)" },
+    Testing:  { color: "#60a5fa", bg: "rgba(29,78,216,0.1)",   border: "rgba(96,165,250,0.25)" },
+    Planned:  { color: "#a78bfa", bg: "rgba(109,40,217,0.1)",  border: "rgba(167,139,250,0.25)" },
   };
   const c = config[status];
   return (

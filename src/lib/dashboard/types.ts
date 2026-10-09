@@ -62,7 +62,7 @@ export interface TestExecutionSummary {
 // Recent projects
 // ---------------------------------------------------------------------------
 
-export type ProjectStatus = "Active" | "Draft" | "Archived";
+export type ProjectStatus = "Active" | "Draft" | "Archived" | "Testing" | "Planned";
 
 export interface DashboardProject {
   id: string;

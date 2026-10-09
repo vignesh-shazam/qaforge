@@ -1,4 +1,4 @@
-export type ProjectStatus = "Active" | "Draft" | "Archived";
+export type ProjectStatus = "Active" | "Draft" | "Archived" | "Testing" | "Planned";
 
 export interface Project {
   id: string;
@@ -6,6 +6,7 @@ export interface Project {
   description: string | null;
   targetUrl: string | null;
   status: ProjectStatus;
+  thumbnail: string | null;
   createdAt: string;
   updatedAt: string;
 }
