@@ -1,5 +1,5 @@
 // QAForge - Prisma Schema
-// V0.3 Project Management.
+// V0.3 Project Management + Google OAuth.
 
 generator client {
   provider = "prisma-client-js"
@@ -16,6 +16,7 @@ model User {
   email                String        @unique
   name                 String?
   passwordHash         String
+  googleId             String?       @unique
   resetTokenHash       String?
   resetTokenExpiresAt  DateTime?
   createdAt            DateTime      @default(now())
