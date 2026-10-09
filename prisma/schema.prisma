@@ -1,5 +1,5 @@
-// QAForge Prisma Schema
-// V0.1 Foundation: User and Project models
+// QAForge - Prisma Schema
+// V0.3 Project Management + Google OAuth.
 
 generator client {
   provider = "prisma-client-js"
@@ -10,20 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User
 model User {
-  id                  String    @id @default(cuid())
-  email               String    @unique
-  name                String?
-  passwordHash        String
-  resetTokenHash      String?
-  resetTokenExpiresAt DateTime?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  projects            Project[]
+  id                   String        @id @default(cuid())
+  email                String        @unique
+  name                 String?
+  passwordHash         String
+  googleId             String?       @unique
+  resetTokenHash       String?
+  resetTokenExpiresAt  DateTime?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  projects             Project[]
 
   @@map("users")
 }
 
+// Project status enum -- matches the native PostgreSQL enum in Supabase
 enum ProjectStatus {
   Active
   Draft
@@ -32,12 +35,14 @@ enum ProjectStatus {
   @@map("project_status")
 }
 
+// Project
 model Project {
   id          String        @id @default(cuid())
   name        String
   description String?
   targetUrl   String?
   status      ProjectStatus @default(Active)
+  thumbnail   String?
   userId      String
   user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime      @default(now())

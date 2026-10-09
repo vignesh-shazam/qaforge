@@ -33,6 +33,7 @@ export default async function ProjectPage({ params }: ProjectPageProps): Promise
     description: raw.description,
     targetUrl: raw.targetUrl,
     status: raw.status as Project["status"],
+    thumbnail: null, // column pending migration
     createdAt: raw.createdAt.toISOString(),
     updatedAt: raw.updatedAt.toISOString(),
   };

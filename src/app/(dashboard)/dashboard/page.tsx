@@ -53,6 +53,7 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
         name: true,
         description: true,
         targetUrl: true,
+        status: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -69,7 +70,7 @@ export default async function DashboardPage(): Promise<React.JSX.Element> {
       // Project model currently has no status field.
       // Until project status is persisted in Prisma,
       // treat existing projects as active.
-      status: "active" as DashboardProject["status"],
+      status: (project.status ?? "Active") as DashboardProject["status"],
 
       updatedAt: new Date(project.updatedAt).toLocaleDateString("en-US", {
         month: "short",
