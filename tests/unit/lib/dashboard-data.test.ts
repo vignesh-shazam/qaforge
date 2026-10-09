@@ -115,7 +115,7 @@ describe("demoRecentProjects", () => {
       expect(project.id.length).toBeGreaterThan(0);
       expect(typeof project.name).toBe("string");
       expect(project.name.length).toBeGreaterThan(0);
-      expect(["Active", "Completed", "Paused"]).toContain(project.status);
+      expect(["Active", "Draft", "Archived", "Testing", "Planned"]).toContain(project.status);
     }
   });
 

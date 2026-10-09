@@ -35,6 +35,9 @@ const serverSchema = z.object({
   APP_URL: z.string().url().default("http://localhost:3000"),
 
   // Legacy NextAuth fields — kept for compatibility
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  // Legacy NextAuth fields
   NEXTAUTH_URL: z.string().url().optional(),
   NEXTAUTH_SECRET: z.string().optional(),
 });

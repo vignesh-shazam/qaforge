@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 // ── Sidebar nav items ──────────────────────────────────────────────────────
 
@@ -10,10 +11,10 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <rect x="1" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".7"/>
-        <rect x="6.5" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
-        <rect x="1" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
-        <rect x="6.5" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4"/>
+        <rect x="1" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".7" />
+        <rect x="6.5" y="1" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4" />
+        <rect x="1" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4" />
+        <rect x="6.5" y="6.5" width="4.5" height="4.5" rx="1" fill="currentColor" opacity=".4" />
       </svg>
     ),
   },
@@ -22,7 +23,7 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <path d="M1 4h10M1 4V9.5a1 1 0 001 1h8a1 1 0 001-1V4M1 4l1.5-2.5h7L11 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M1 4h10M1 4V9.5a1 1 0 001 1h8a1 1 0 001-1V4M1 4l1.5-2.5h7L11 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -31,8 +32,8 @@ const sidebarItems = [
     active: true,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <rect x="1.5" y="1" width="9" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.1"/>
-        <path d="M3.5 4h5M3.5 6.5h3.5M3.5 9h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <rect x="1.5" y="1" width="9" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.1" />
+        <path d="M3.5 4h5M3.5 6.5h3.5M3.5 9h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -41,8 +42,8 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="1.1"/>
-        <path d="M6 3V1.5M6 10.5V9M3 6H1.5M10.5 6H9" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="1.1" />
+        <path d="M6 3V1.5M6 10.5V9M3 6H1.5M10.5 6H9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -51,8 +52,8 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <ellipse cx="6" cy="4" rx="4" ry="1.8" stroke="currentColor" strokeWidth="1.1"/>
-        <path d="M2 4v4c0 1 1.8 1.8 4 1.8s4-.8 4-1.8V4" stroke="currentColor" strokeWidth="1.1"/>
+        <ellipse cx="6" cy="4" rx="4" ry="1.8" stroke="currentColor" strokeWidth="1.1" />
+        <path d="M2 4v4c0 1 1.8 1.8 4 1.8s4-.8 4-1.8V4" stroke="currentColor" strokeWidth="1.1" />
       </svg>
     ),
   },
@@ -61,7 +62,7 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <path d="M1.5 6h9M7 2.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M1.5 6h9M7 2.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -70,8 +71,8 @@ const sidebarItems = [
     active: false,
     icon: (
       <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <circle cx="6" cy="6" r="2" stroke="currentColor" strokeWidth="1.1"/>
-        <path d="M6 1v1.5M6 9.5V11M1 6h1.5M9.5 6H11M2.6 2.6l1.1 1.1M8.3 8.3l1.1 1.1M2.6 9.4l1.1-1.1M8.3 3.7l1.1-1.1" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+        <circle cx="6" cy="6" r="2" stroke="currentColor" strokeWidth="1.1" />
+        <path d="M6 1v1.5M6 9.5V11M1 6h1.5M9.5 6H11M2.6 2.6l1.1 1.1M8.3 8.3l1.1 1.1M2.6 9.4l1.1-1.1M8.3 3.7l1.1-1.1" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -115,8 +116,8 @@ function TestCaseGeneratorUI(): React.JSX.Element {
           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
         >
           <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-            <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1"/>
-            <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1" strokeLinecap="round"/>
+            <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1" />
+            <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.25)" strokeWidth="1.1" strokeLinecap="round" />
           </svg>
           <span className="text-[9px] flex-1" style={{ color: "rgba(255,255,255,0.2)" }}>Search projects, tests…</span>
         </div>
@@ -187,8 +188,8 @@ function TestCaseGeneratorUI(): React.JSX.Element {
               style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)" }}
             >
               <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1"/>
-                <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1" strokeLinecap="round"/>
+                <circle cx="4.3" cy="4.3" r="3.3" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1" />
+                <path d="M7 7l1.5 1.5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.1" strokeLinecap="round" />
               </svg>
               <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
                 https://example.com
@@ -218,7 +219,7 @@ function TestCaseGeneratorUI(): React.JSX.Element {
                   >
                     {opt.checked && (
                       <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
-                        <path d="M1.5 4l2 2 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1.5 4l2 2 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
@@ -229,12 +230,23 @@ function TestCaseGeneratorUI(): React.JSX.Element {
           </div>
 
           {/* Generate button */}
-          <div
-            className="h-8 rounded-lg flex items-center justify-center text-[11px] font-semibold text-white mt-auto"
-            style={{ background: "linear-gradient(135deg,#6366f1,#4f46e5)", boxShadow: "0 0 16px rgba(99,102,241,0.4)" }}
+
+          <button
+            type="button"
+            className="inline-flex items-center gap-2.5 h-11 px-6 rounded-xl text-sm font-semibold self-start transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            style={{
+              background: "linear-gradient(135deg,#6366f1,#4f46e5)",
+              color: "white",
+              boxShadow: "0 0 20px rgba(99,102,241,0.4)",
+            }}
           >
-            Generate Test Cases
-          </div>
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 whitespace-nowrap"
+            >
+              Generate Test Cases
+            </Link>
+          </button>
         </div>
       </div>
     </div>
@@ -336,8 +348,8 @@ export function ProductShowcase(): React.JSX.Element {
                 <li key={b} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
                   <span className="shrink-0">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                      <circle cx="9" cy="9" r="8" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.3)" strokeWidth="0.9"/>
-                      <path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="#4ade80" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="9" cy="9" r="8" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.3)" strokeWidth="0.9" />
+                      <path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="#4ade80" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                   {b}
@@ -358,13 +370,18 @@ export function ProductShowcase(): React.JSX.Element {
               {/* Play circle */}
               <span
                 className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,255,255,0.2)" }}
+                style={{ background: "rgba(255,255,255,0.15)" }}
               >
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                  <path d="M3.5 2.5l4 2.5-4 2.5V2.5Z" fill="white"/>
+                  <path d="M3.5 2.5l4 2.5-4 2.5V2.5Z" fill="white" />
                 </svg>
               </span>
-              Watch Demo
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 whitespace-nowrap"
+              >
+                Watch Demo
+              </Link>
             </button>
           </div>
 

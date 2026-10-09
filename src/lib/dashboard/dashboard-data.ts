@@ -119,7 +119,7 @@ export const demoRecentProjects: DashboardProject[] = [
     testCases: 18,
     bugs: 2,
     automationRuns: 6,
-    status: "Completed",
+    status: "Draft",
     updatedAt: "3 days ago",
   },
   {

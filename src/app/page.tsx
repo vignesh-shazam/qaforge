@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -15,44 +16,42 @@ import { FinalCTA } from "@/components/landing/FinalCTA";
 export const metadata: Metadata = {
   title: "QAForge — AI-Powered QA Automation Platform",
   description:
-    "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
+    "Build better software with QAForge. Analyze applications, generate test cases, find bugs, create test data, and build test automation with AI.",
   openGraph: {
-    type: "website",
     title: "QAForge — AI-Powered QA Automation Platform",
     description:
-      "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
-    siteName: "QAForge",
+      "Build better software with AI-powered quality assurance.",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "QAForge — AI-Powered QA Automation Platform",
     description:
-      "Turn any web application into a production-ready QA automation framework. Generate test cases, bug reports, test data, API tests and Playwright automation — powered by AI.",
+      "Build better software with AI-powered quality assurance.",
   },
 };
 
 export default function LandingPage(): React.JSX.Element {
   return (
     <div className="marketing-background">
-      {/* Shared background image across the full landing page */}
+      {/* Background image and effects */}
       <div
         className="marketing-background__image"
         aria-hidden="true"
       />
 
-      {/* Ambient lighting */}
-      <div
+      {/* <div
         className="marketing-background__glow marketing-background__glow--blue"
         aria-hidden="true"
-      />
+      /> */}
 
-      <div
-        className="marketing-background__glow marketing-background__glow--purple"
-        aria-hidden="true"
-      />
+        {/* <div
+            className="marketing-background__glow marketing-background__glow--purple"
+            aria-hidden="true"
+        /> */}
 
-      {/* All existing landing page sections */}
-      <main>
+      {/* Landing page content */}
+      <main className="marketing-background__content">
         <HeroSection />
         <TrustSection />
         <ProblemSolution />

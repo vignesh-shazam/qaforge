@@ -1,4 +1,4 @@
-@import "tailwindcss";
+ @import "tailwindcss";
 
 /* ==========================================================================
    QAForge Design Tokens
@@ -17,7 +17,7 @@
   --color-brand-600: #4f46e5;
   --color-brand-700: #4338ca;
 
-  /* --- Surface Colors (dark backgrounds) ---------------------------------- */
+  /* --- Surface Colors ---------------------------------------------------- */
   --color-surface-950: #09090b;
   --color-surface-900: #0f0f11;
   --color-surface-800: #18181b;
@@ -25,13 +25,13 @@
   --color-surface-600: #3f3f46;
   --color-surface-500: #52525b;
 
-  /* --- Content Colors (text) ----------------------------------------------- */
+  /* --- Content Colors ---------------------------------------------------- */
   --color-content-primary: #fafafa;
   --color-content-secondary: #a1a1aa;
   --color-content-tertiary: #71717a;
   --color-content-disabled: #52525b;
 
-  /* --- Semantic Colors ---------------------------------------------------- */
+  /* --- Semantic Colors --------------------------------------------------- */
   --color-success-400: #4ade80;
   --color-success-500: #22c55e;
   --color-success-900: #14532d;
@@ -48,7 +48,7 @@
   --color-info-500: #3b82f6;
   --color-info-900: #172554;
 
-  /* --- Border radius ------------------------------------------------------ */
+  /* --- Border Radius ----------------------------------------------------- */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
@@ -81,7 +81,7 @@
     line-height: 1.5;
   }
 
-  /* Focus ring — consistent across all interactive elements */
+  /* Consistent focus ring */
   :focus-visible {
     outline: 2px solid var(--color-brand-500);
     outline-offset: 2px;
@@ -94,7 +94,7 @@
     }
   }
 
-  /* Respect reduced motion preference */
+  /* Respect reduced-motion preferences */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -102,7 +102,192 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
+  }
+}
+
+/* ==========================================================================
+   QAForge — Animated Hero Background
+   Image: public/images/qaforge-hero-bg.png
+   ========================================================================== */
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  background: #050817;
+}
+
+.hero-background__image {
+  position: absolute;
+  inset: -2%;
+  background-image: url("/images/qaforge-hero-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.02);
+  animation: qaforge-image-drift 24s ease-in-out infinite alternate;
+}
+
+.hero-background__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 23, 0.48) 0%,
+      rgba(5, 8, 23, 0.12) 55%,
+      rgba(5, 8, 23, 0.22) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 23, 0.08) 0%,
+      rgba(5, 8, 23, 0.06) 55%,
+      rgba(5, 8, 23, 0.55) 100%
+    );
+}
+
+/* Ambient blue and violet lighting */
+.hero-background__glow {
+  position: absolute;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.2;
+  mix-blend-mode: screen;
+  animation: qaforge-glow-float 14s ease-in-out infinite alternate;
+}
+
+.hero-background__glow--blue {
+  top: 5%;
+  right: -12rem;
+  background: #2563eb;
+}
+
+.hero-background__glow--purple {
+  bottom: -18rem;
+  left: 20%;
+  background: #9333ea;
+  animation-delay: -7s;
+}
+
+/* Floating light particles */
+.hero-background__particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-background__particle {
+  position: absolute;
+  left: var(--particle-x);
+  bottom: -12px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #67e8f9;
+  box-shadow:
+    0 0 8px rgba(34, 211, 238, 0.9),
+    0 0 18px rgba(99, 102, 241, 0.5);
+  opacity: 0;
+  animation:
+    qaforge-particle-rise var(--particle-duration) linear
+    var(--particle-delay) infinite;
+}
+
+.hero-background__particle:nth-child(3n) {
+  background: #c084fc;
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.8);
+}
+
+.hero-background__particle:nth-child(4n) {
+  width: 2px;
+  height: 2px;
+}
+
+/* ==========================================================================
+   Animation Keyframes
+   ========================================================================== */
+
+@keyframes qaforge-image-drift {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.09) translate3d(-1%, 1%, 0);
+  }
+}
+
+@keyframes qaforge-glow-float {
+  from {
+    transform: translate3d(-20px, -10px, 0) scale(0.9);
+  }
+
+  to {
+    transform: translate3d(25px, 20px, 0) scale(1.12);
+  }
+}
+
+@keyframes qaforge-particle-rise {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate3d(18px, -100vh, 0);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Responsive Optimization
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .hero-background__glow {
+    width: 20rem;
+    height: 20rem;
+    filter: blur(75px);
+  }
+
+  .hero-background__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 8, 23, 0.2) 0%,
+        rgba(5, 8, 23, 0.4) 100%
+      );
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background__image,
+  .hero-background__glow,
+  .hero-background__particle {
+    animation: none !important;
+  }
+
+  .hero-background__particle {
+    display: none;
   }
 }
 

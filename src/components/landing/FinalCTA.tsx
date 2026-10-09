@@ -71,7 +71,7 @@ export function FinalCTA(): React.JSX.Element {
             {/* Center — buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
               <Link
-                href="/register"
+                href="/login"
                 className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 whitespace-nowrap"
                 style={{
                   background: "linear-gradient(135deg,#6366f1,#4f46e5)",
@@ -80,7 +80,7 @@ export function FinalCTA(): React.JSX.Element {
               >
                 Get Started Free
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
 
@@ -99,10 +99,15 @@ export function FinalCTA(): React.JSX.Element {
                   style={{ background: "rgba(255,255,255,0.15)" }}
                 >
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                    <path d="M3.5 2.5l4 2.5-4 2.5V2.5Z" fill="white"/>
+                    <path d="M3.5 2.5l4 2.5-4 2.5V2.5Z" fill="white" />
                   </svg>
                 </span>
-                Watch Demo
+                <Link
+                  href="/login"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-150 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 whitespace-nowrap"
+                >
+                  Watch Demo
+                </Link>
               </button>
             </div>
 
@@ -113,20 +118,20 @@ export function FinalCTA(): React.JSX.Element {
                 <IconTile bg="linear-gradient(135deg,#6366f1,#4f46e5)">
                   {/* Test cases doc */}
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <rect x="4" y="2" width="14" height="18" rx="2.5" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
-                    <rect x="6.5" y="5.5" width="9" height="1.8" rx="0.9" fill="white" opacity=".9"/>
-                    <rect x="6.5" y="9" width="6" height="1.5" rx="0.75" fill="white" opacity=".6"/>
-                    <rect x="6.5" y="12" width="7.5" height="1.5" rx="0.75" fill="white" opacity=".45"/>
-                    <path d="M6.5 15.5l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity=".8"/>
+                    <rect x="4" y="2" width="14" height="18" rx="2.5" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
+                    <rect x="6.5" y="5.5" width="9" height="1.8" rx="0.9" fill="white" opacity=".9" />
+                    <rect x="6.5" y="9" width="6" height="1.5" rx="0.75" fill="white" opacity=".6" />
+                    <rect x="6.5" y="12" width="7.5" height="1.5" rx="0.75" fill="white" opacity=".45" />
+                    <path d="M6.5 15.5l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity=".8" />
                   </svg>
                 </IconTile>
                 <IconTile bg="linear-gradient(135deg,#dc2626,#ef4444)">
                   {/* Bug */}
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <circle cx="11" cy="11" r="5.5" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1"/>
-                    <path d="M11 7.5v5" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                    <circle cx="11" cy="15" r="1" fill="white"/>
-                    <path d="M5 11H3M19 11h-2M8.5 7L7 5M13.5 7l1.5-2" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinecap="round"/>
+                    <circle cx="11" cy="11" r="5.5" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1" />
+                    <path d="M11 7.5v5" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+                    <circle cx="11" cy="15" r="1" fill="white" />
+                    <path d="M5 11H3M19 11h-2M8.5 7L7 5M13.5 7l1.5-2" stroke="rgba(255,255,255,0.5)" strokeWidth="1" strokeLinecap="round" />
                   </svg>
                 </IconTile>
               </div>
@@ -135,16 +140,16 @@ export function FinalCTA(): React.JSX.Element {
                 <IconTile bg="linear-gradient(135deg,#0e9e82,#14b8a6)">
                   {/* Database */}
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <ellipse cx="11" cy="7" rx="6" ry="2.5" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.45)" strokeWidth="1.1"/>
-                    <path d="M5 7v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V7" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1"/>
-                    <path d="M5 11v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1"/>
+                    <ellipse cx="11" cy="7" rx="6" ry="2.5" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.45)" strokeWidth="1.1" />
+                    <path d="M5 7v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V7" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1" />
+                    <path d="M5 11v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.1" />
                   </svg>
                 </IconTile>
                 <IconTile bg="linear-gradient(135deg,#7c3aed,#6366f1)">
                   {/* AI sparkle */}
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path d="M11 3l2 5.5 5.5.5-4 3.5 1.5 5.5L11 15l-5 3 1.5-5.5L3.5 9l5.5-.5L11 3Z" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.2" strokeLinejoin="round"/>
-                    <circle cx="17" cy="5" r="1.8" fill="white" opacity=".8"/>
+                    <path d="M11 3l2 5.5 5.5.5-4 3.5 1.5 5.5L11 15l-5 3 1.5-5.5L3.5 9l5.5-.5L11 3Z" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.2" strokeLinejoin="round" />
+                    <circle cx="17" cy="5" r="1.8" fill="white" opacity=".8" />
                   </svg>
                 </IconTile>
               </div>
@@ -152,6 +157,6 @@ export function FinalCTA(): React.JSX.Element {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
