@@ -34,6 +34,9 @@ const serverSchema = z.object({
   // Base URL used for generating password reset links.
   APP_URL: z.string().url().default("http://localhost:3000"),
 
+  // Email address of the exclusive QAForge admin owner.
+  ADMIN_OWNER_EMAIL: z.string().email().optional(),
+
   // Legacy NextAuth fields — kept for compatibility
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
@@ -65,7 +68,7 @@ function validateServerEnv(): z.infer<typeof serverSchema> {
 
     throw new Error(
       `\n\n❌ Invalid server environment variables:\n${formatted}\n\n` +
-        `See .env.example for required configuration.\n`,
+      `See .env.example for required configuration.\n`,
     );
   }
 
@@ -84,7 +87,7 @@ function validateClientEnv(): z.infer<typeof clientSchema> {
 
     throw new Error(
       `\n\n❌ Invalid client environment variables:\n${formatted}\n\n` +
-        `See .env.example for required configuration.\n`,
+      `See .env.example for required configuration.\n`,
     );
   }
 
