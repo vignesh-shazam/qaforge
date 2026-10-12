@@ -1,294 +1,433 @@
  @import "tailwindcss";
 
-/* ==========================================================================
+ /* ==========================================================================
    QAForge Design Tokens
    Tailwind v4 uses CSS @theme for design tokens instead of tailwind.config.ts
    ========================================================================== */
 
-@theme {
-  /* --- Typography --------------------------------------------------------- */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Code",
-    "Source Code Pro", Menlo, monospace;
+ @theme {
+   /* --- Typography --------------------------------------------------------- */
+   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+   --font-mono: var(--font-jetbrains-mono), ui-monospace, "Cascadia Code",
+     "Source Code Pro", Menlo, monospace;
 
-  /* --- Brand Colors ------------------------------------------------------- */
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
+   /* --- Brand Colors ------------------------------------------------------- */
+   --color-brand-400: #818cf8;
+   --color-brand-500: #6366f1;
+   --color-brand-600: #4f46e5;
+   --color-brand-700: #4338ca;
 
-  /* --- Surface Colors ---------------------------------------------------- */
-  --color-surface-950: #09090b;
-  --color-surface-900: #0f0f11;
-  --color-surface-800: #18181b;
-  --color-surface-700: #27272a;
-  --color-surface-600: #3f3f46;
-  --color-surface-500: #52525b;
+   /* --- Surface Colors ---------------------------------------------------- */
+   --color-surface-950: #09090b;
+   --color-surface-900: #0f0f11;
+   --color-surface-800: #18181b;
+   --color-surface-700: #27272a;
+   --color-surface-600: #3f3f46;
+   --color-surface-500: #52525b;
 
-  /* --- Content Colors ---------------------------------------------------- */
-  --color-content-primary: #fafafa;
-  --color-content-secondary: #a1a1aa;
-  --color-content-tertiary: #71717a;
-  --color-content-disabled: #52525b;
+   /* --- Content Colors ---------------------------------------------------- */
+   --color-content-primary: #fafafa;
+   --color-content-secondary: #a1a1aa;
+   --color-content-tertiary: #71717a;
+   --color-content-disabled: #52525b;
 
-  /* --- Semantic Colors --------------------------------------------------- */
-  --color-success-400: #4ade80;
-  --color-success-500: #22c55e;
-  --color-success-900: #14532d;
+   /* --- Semantic Colors --------------------------------------------------- */
+   --color-success-400: #4ade80;
+   --color-success-500: #22c55e;
+   --color-success-900: #14532d;
 
-  --color-warning-400: #fbbf24;
-  --color-warning-500: #f59e0b;
-  --color-warning-900: #451a03;
+   --color-warning-400: #fbbf24;
+   --color-warning-500: #f59e0b;
+   --color-warning-900: #451a03;
 
-  --color-error-400: #f87171;
-  --color-error-500: #ef4444;
-  --color-error-900: #450a0a;
+   --color-error-400: #f87171;
+   --color-error-500: #ef4444;
+   --color-error-900: #450a0a;
 
-  --color-info-400: #60a5fa;
-  --color-info-500: #3b82f6;
-  --color-info-900: #172554;
+   --color-info-400: #60a5fa;
+   --color-info-500: #3b82f6;
+   --color-info-900: #172554;
 
-  /* --- Border Radius ----------------------------------------------------- */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-}
+   /* --- Border Radius ----------------------------------------------------- */
+   --radius-sm: 0.375rem;
+   --radius-md: 0.5rem;
+   --radius-lg: 0.75rem;
+   --radius-xl: 1rem;
+ }
 
-/* ==========================================================================
+ /* ==========================================================================
    Base Styles
    ========================================================================== */
 
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+ @layer base {
 
-  html {
-    height: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
+   *,
+   *::before,
+   *::after {
+     box-sizing: border-box;
+   }
 
-  body {
-    min-height: 100%;
-    background-color: var(--color-surface-900);
-    color: var(--color-content-primary);
-    font-family: var(--font-sans);
-    line-height: 1.5;
-  }
+   html {
+     height: 100%;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     text-rendering: optimizeLegibility;
+   }
 
-  /* Consistent focus ring */
-  :focus-visible {
-    outline: 2px solid var(--color-brand-500);
-    outline-offset: 2px;
-  }
+   body {
+     min-height: 100%;
+     background-color: var(--color-surface-900);
+     color: var(--color-content-primary);
+     font-family: var(--font-sans);
+     line-height: 1.5;
+   }
 
-  /* Smooth scrolling */
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+   /* Consistent focus ring */
+   :focus-visible {
+     outline: 2px solid var(--color-brand-500);
+     outline-offset: 2px;
+   }
 
-  /* Respect reduced-motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-}
+   /* Smooth scrolling */
+   @media (prefers-reduced-motion: no-preference) {
+     html {
+       scroll-behavior: smooth;
+     }
+   }
 
-/* ==========================================================================
+   /* Respect reduced-motion preferences */
+   @media (prefers-reduced-motion: reduce) {
+
+     *,
+     *::before,
+     *::after {
+       animation-duration: 0.01ms !important;
+       animation-iteration-count: 1 !important;
+       transition-duration: 0.01ms !important;
+       scroll-behavior: auto !important;
+     }
+   }
+ }
+
+ /* ==========================================================================
    QAForge — Animated Hero Background
    Image: public/images/qaforge-hero-bg.png
    ========================================================================== */
 
-.hero-background {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  isolation: isolate;
-  pointer-events: none;
-  background: #050817;
-}
+ .hero-background {
+   position: absolute;
+   inset: 0;
+   z-index: 0;
+   overflow: hidden;
+   isolation: isolate;
+   pointer-events: none;
+   background: #050817;
+ }
 
-.hero-background__image {
-  position: absolute;
-  inset: -2%;
-  background-image: url("/images/qaforge-hero-bg.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  transform: scale(1.02);
-  animation: qaforge-image-drift 24s ease-in-out infinite alternate;
-}
+ .hero-background__image {
+   position: absolute;
+   inset: -2%;
+   background-image: url("/images/qaforge-hero-bg.png");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   transform: scale(1.02);
+   animation: qaforge-image-drift 24s ease-in-out infinite alternate;
+ }
 
-.hero-background__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(5, 8, 23, 0.48) 0%,
-      rgba(5, 8, 23, 0.12) 55%,
-      rgba(5, 8, 23, 0.22) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(5, 8, 23, 0.08) 0%,
-      rgba(5, 8, 23, 0.06) 55%,
-      rgba(5, 8, 23, 0.55) 100%
-    );
-}
+ .hero-background__overlay {
+   position: absolute;
+   inset: 0;
+   background:
+     linear-gradient(90deg,
+       rgba(5, 8, 23, 0.48) 0%,
+       rgba(5, 8, 23, 0.12) 55%,
+       rgba(5, 8, 23, 0.22) 100%),
+     linear-gradient(180deg,
+       rgba(5, 8, 23, 0.08) 0%,
+       rgba(5, 8, 23, 0.06) 55%,
+       rgba(5, 8, 23, 0.55) 100%);
+ }
 
-/* Ambient blue and violet lighting */
-.hero-background__glow {
-  position: absolute;
-  width: 34rem;
-  height: 34rem;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.2;
-  mix-blend-mode: screen;
-  animation: qaforge-glow-float 14s ease-in-out infinite alternate;
-}
+ /* Ambient blue and violet lighting */
+ .hero-background__glow {
+   position: absolute;
+   width: 34rem;
+   height: 34rem;
+   border-radius: 50%;
+   filter: blur(100px);
+   opacity: 0.2;
+   mix-blend-mode: screen;
+   animation: qaforge-glow-float 14s ease-in-out infinite alternate;
+ }
 
-.hero-background__glow--blue {
-  top: 5%;
-  right: -12rem;
-  background: #2563eb;
-}
+ .hero-background__glow--blue {
+   top: 5%;
+   right: -12rem;
+   background: #2563eb;
+ }
 
-.hero-background__glow--purple {
-  bottom: -18rem;
-  left: 20%;
-  background: #9333ea;
-  animation-delay: -7s;
-}
+ .hero-background__glow--purple {
+   bottom: -18rem;
+   left: 20%;
+   background: #9333ea;
+   animation-delay: -7s;
+ }
 
-/* Floating light particles */
-.hero-background__particles {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
+ /* Floating light particles */
+ .hero-background__particles {
+   position: absolute;
+   inset: 0;
+   overflow: hidden;
+ }
 
-.hero-background__particle {
-  position: absolute;
-  left: var(--particle-x);
-  bottom: -12px;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #67e8f9;
-  box-shadow:
-    0 0 8px rgba(34, 211, 238, 0.9),
-    0 0 18px rgba(99, 102, 241, 0.5);
-  opacity: 0;
-  animation:
-    qaforge-particle-rise var(--particle-duration) linear
-    var(--particle-delay) infinite;
-}
+ .hero-background__particle {
+   position: absolute;
+   left: var(--particle-x);
+   bottom: -12px;
+   width: 3px;
+   height: 3px;
+   border-radius: 50%;
+   background: #67e8f9;
+   box-shadow:
+     0 0 8px rgba(34, 211, 238, 0.9),
+     0 0 18px rgba(99, 102, 241, 0.5);
+   opacity: 0;
+   animation:
+     qaforge-particle-rise var(--particle-duration) linear var(--particle-delay) infinite;
+ }
 
-.hero-background__particle:nth-child(3n) {
-  background: #c084fc;
-  box-shadow: 0 0 12px rgba(192, 132, 252, 0.8);
-}
+ .hero-background__particle:nth-child(3n) {
+   background: #c084fc;
+   box-shadow: 0 0 12px rgba(192, 132, 252, 0.8);
+ }
 
-.hero-background__particle:nth-child(4n) {
-  width: 2px;
-  height: 2px;
-}
+ .hero-background__particle:nth-child(4n) {
+   width: 2px;
+   height: 2px;
+ }
 
-/* ==========================================================================
+ /* ==========================================================================
    Animation Keyframes
    ========================================================================== */
 
-@keyframes qaforge-image-drift {
-  from {
-    transform: scale(1.02) translate3d(0, 0, 0);
-  }
+ @keyframes qaforge-image-drift {
+   from {
+     transform: scale(1.02) translate3d(0, 0, 0);
+   }
 
-  to {
-    transform: scale(1.09) translate3d(-1%, 1%, 0);
-  }
-}
+   to {
+     transform: scale(1.09) translate3d(-1%, 1%, 0);
+   }
+ }
 
-@keyframes qaforge-glow-float {
-  from {
-    transform: translate3d(-20px, -10px, 0) scale(0.9);
-  }
+ @keyframes qaforge-glow-float {
+   from {
+     transform: translate3d(-20px, -10px, 0) scale(0.9);
+   }
 
-  to {
-    transform: translate3d(25px, 20px, 0) scale(1.12);
-  }
-}
+   to {
+     transform: translate3d(25px, 20px, 0) scale(1.12);
+   }
+ }
 
-@keyframes qaforge-particle-rise {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
+ @keyframes qaforge-particle-rise {
+   0% {
+     transform: translate3d(0, 0, 0);
+     opacity: 0;
+   }
 
-  15% {
-    opacity: 0.8;
-  }
+   15% {
+     opacity: 0.8;
+   }
 
-  80% {
-    opacity: 0.5;
-  }
+   80% {
+     opacity: 0.5;
+   }
 
-  100% {
-    transform: translate3d(18px, -100vh, 0);
-    opacity: 0;
-  }
-}
+   100% {
+     transform: translate3d(18px, -100vh, 0);
+     opacity: 0;
+   }
+ }
 
-/* ==========================================================================
+ /* ==========================================================================
    Responsive Optimization
    ========================================================================== */
 
-@media (max-width: 640px) {
-  .hero-background__glow {
-    width: 20rem;
-    height: 20rem;
-    filter: blur(75px);
-  }
+ @media (max-width: 640px) {
+   .hero-background__glow {
+     width: 20rem;
+     height: 20rem;
+     filter: blur(75px);
+   }
 
-  .hero-background__overlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(5, 8, 23, 0.2) 0%,
-        rgba(5, 8, 23, 0.4) 100%
-      );
-  }
-}
+   .hero-background__overlay {
+     background:
+       linear-gradient(180deg,
+         rgba(5, 8, 23, 0.2) 0%,
+         rgba(5, 8, 23, 0.4) 100%);
+   }
+ }
 
-/* ==========================================================================
+ /* ==========================================================================
    Reduced Motion Accessibility
    ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-background__image,
-  .hero-background__glow,
-  .hero-background__particle {
-    animation: none !important;
-  }
+ @media (prefers-reduced-motion: reduce) {
 
-  .hero-background__particle {
-    display: none;
-  }
-}
+   .hero-background__image,
+   .hero-background__glow,
+   .hero-background__particle {
+     animation: none !important;
+   }
 
-/* Card hover glow is applied via onMouseEnter/Leave in each component. */
+   .hero-background__particle {
+     display: none;
+   }
+ }
+
+ /* Card hover glow is applied via onMouseEnter/Leave in each component. */
+
+
+
+ /* ========================================
+   QAForge User Management animations
+   ======================================== */
+
+ .qaf-users {
+   isolation: isolate;
+ }
+
+ .page-enter {
+   animation: qa-fade-up 550ms cubic-bezier(.2, .8, .2, 1) both;
+ }
+
+ .summary-card {
+   animation: qa-fade-up 500ms cubic-bezier(.2, .8, .2, 1) both;
+ }
+
+ .table-enter {
+   animation: qa-fade-up 650ms cubic-bezier(.2, .8, .2, 1) both;
+ }
+
+ .user-row {
+   animation: qa-fade-up 350ms ease both;
+ }
+
+ @keyframes qa-fade-up {
+   from {
+     opacity: 0;
+     transform: translateY(14px);
+   }
+
+   to {
+     opacity: 1;
+     transform: translateY(0);
+   }
+ }
+
+ /* Floating SVG illustration */
+
+ .graphic-float {
+   transform-box: fill-box;
+   transform-origin: center;
+   animation: qa-float 4s ease-in-out infinite;
+ }
+
+ .graphic-float-delay {
+   transform-box: fill-box;
+   transform-origin: center;
+   animation: qa-float 4.6s ease-in-out infinite;
+   animation-delay: 350ms;
+ }
+
+ .graphic-float-delay-two {
+   transform-box: fill-box;
+   transform-origin: center;
+   animation: qa-float 4.2s ease-in-out infinite;
+   animation-delay: 700ms;
+ }
+
+ @keyframes qa-float {
+
+   0%,
+   100% {
+     transform: translateY(0);
+   }
+
+   50% {
+     transform: translateY(-6px);
+   }
+ }
+
+ /* Animated mini-chart lines */
+
+ .trend-line {
+   stroke-dasharray: 180;
+   stroke-dashoffset: 180;
+   animation: qa-draw-line 1.6s ease forwards;
+ }
+
+ @keyframes qa-draw-line {
+   to {
+     stroke-dashoffset: 0;
+   }
+ }
+
+ /* Account details modal */
+
+ .modal-backdrop {
+   animation: qa-backdrop-in 180ms ease both;
+ }
+
+ .modal-panel {
+   animation: qa-modal-in 240ms cubic-bezier(.2, .8, .2, 1) both;
+ }
+
+ @keyframes qa-backdrop-in {
+   from {
+     opacity: 0;
+   }
+
+   to {
+     opacity: 1;
+   }
+ }
+
+ @keyframes qa-modal-in {
+   from {
+     opacity: 0;
+     transform: translateY(12px) scale(.98);
+   }
+
+   to {
+     opacity: 1;
+     transform: translateY(0) scale(1);
+   }
+ }
+
+ /* Respect accessibility settings */
+
+ @media (prefers-reduced-motion: reduce) {
+
+   .page-enter,
+   .summary-card,
+   .table-enter,
+   .user-row,
+   .graphic-float,
+   .graphic-float-delay,
+   .graphic-float-delay-two,
+   .trend-line,
+   .modal-backdrop,
+   .modal-panel {
+     animation: none !important;
+   }
+
+   .qaf-users *,
+   .qaf-users *::before,
+   .qaf-users *::after {
+     scroll-behavior: auto !important;
+     transition-duration: 0.01ms !important;
+   }
+ }
