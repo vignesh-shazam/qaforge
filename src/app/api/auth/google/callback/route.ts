@@ -55,7 +55,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   // Build callback URL from the actual request origin to avoid APP_URL mismatch
   const origin = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
-  const callbackUrl = `${origin}/api/auth/google/callback`;
+  const appUrl = serverEnv.APP_URL.replace(/\/+$/, "");
+  const callbackUrl = `${appUrl}/api/auth/google/callback`;
+
+  if (origin !== appUrl) {
+    console.error("[google/callback] Origin mismatch", {
+      requestOrigin: origin,
+      configuredOrigin: appUrl,
+    });
+
+    return loginRedirect("oauth_configuration_mismatch");
+  }
 
   try {
     const oauth2Client = new OAuth2Client(clientId, clientSecret, callbackUrl);
