@@ -1,5 +1,5 @@
 // QAForge - Prisma Schema
-// V0.3 Project Management + Google OAuth.
+// V0.4 URL Discovery + V0.3 Project Management + Google OAuth.
 
 generator client {
   provider = "prisma-client-js"
@@ -10,23 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User
 model User {
-  id                   String        @id @default(cuid())
-  email                String        @unique
-  name                 String?
-  passwordHash         String
-  googleId             String?       @unique
-  resetTokenHash       String?
-  resetTokenExpiresAt  DateTime?
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
-  projects             Project[]
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  name                String?
+  passwordHash        String
+  googleId            String?   @unique
+  resetTokenHash      String?
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  projects            Project[]
 
   @@map("users")
 }
 
-// Project status enum -- matches the native PostgreSQL enum in Supabase
 enum ProjectStatus {
   Active
   Draft
@@ -35,19 +33,62 @@ enum ProjectStatus {
   @@map("project_status")
 }
 
-// Project
+enum DiscoveryStatus {
+  Pending
+  Running
+  Completed
+  Failed
+
+  @@map("discovery_status")
+}
+
 model Project {
-  id          String        @id @default(cuid())
-  name        String
-  description String?
-  targetUrl   String?
-  status      ProjectStatus @default(Active)
-  thumbnail   String?
-  userId      String
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            String         @id @default(cuid())
+  name          String
+  description   String?
+  targetUrl     String?
+  status        ProjectStatus  @default(Active)
+  thumbnail     String?
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  discoveryRuns DiscoveryRun[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   @@index([userId])
   @@map("projects")
+}
+
+model DiscoveryRun {
+  id          String           @id @default(cuid())
+  projectId   String
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  status      DiscoveryStatus  @default(Pending)
+  startUrl    String
+  pagesFound  Int              @default(0)
+  error       String?
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  pages       DiscoveredPage[]
+
+  @@index([projectId, createdAt])
+  @@index([status])
+  @@map("discovery_runs")
+}
+
+model DiscoveredPage {
+  id             String       @id @default(cuid())
+  discoveryRunId String
+  discoveryRun   DiscoveryRun @relation(fields: [discoveryRunId], references: [id], onDelete: Cascade)
+  url            String
+  title          String?
+  httpStatus     Int?
+  depth          Int          @default(0)
+  discoveredAt   DateTime     @default(now())
+
+  @@unique([discoveryRunId, url])
+  @@index([discoveryRunId])
+  @@map("discovered_pages")
 }
